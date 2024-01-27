@@ -1,16 +1,11 @@
 package app.Config;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.BindException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import top.lingkang.finalvalidated.error.ValidatedException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author lingkang
@@ -19,4 +14,14 @@ import java.util.List;
 @RestControllerAdvice
 public class ExceptionConfig {
 
+    /**
+     * 捕获校验异常，返回rest结果
+     */
+    @ExceptionHandler(ValidatedException.class)
+    public Object v(ValidatedException e) {
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("msg",e.getMessage());
+        return map;
+    }
 }

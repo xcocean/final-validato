@@ -1,4 +1,4 @@
-package top.lingkang.finalvalidated.annotate;
+package top.lingkang.finalvalidated.core;
 
 import java.lang.annotation.*;
 

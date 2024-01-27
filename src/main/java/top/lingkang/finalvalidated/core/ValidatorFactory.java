@@ -1,31 +1,63 @@
 package top.lingkang.finalvalidated.core;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import top.lingkang.finalvalidated.error.CheckException;
+import top.lingkang.finalvalidated.handle.ValidHandle;
+import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * @author lingkang
  * created by 2024/1/26
  */
-@Configuration
-public class ParamValidator implements Validator {
-    private static final Map<Class,Object> cache=new HashMap<>();
+public class ValidatorFactory implements Validator {
+    private static final Map<Class<?>, CheckObject> cache = new HashMap<>();
+    public static final Properties message = new Properties();
 
     @Override
     public boolean supports(Class<?> clazz) {
-        Object o = cache.get(clazz);
-        if (o!=null)
-            return true;
-        return false;
+        CheckObject check = cache.get(clazz);
+        if (check != null)
+            return check.isNeed();
+
+        check = new CheckObject();
+        // 判断是否需要校验入参对象
+        if (FinalValidatorUtils.existsConstraints(clazz.getDeclaredFields())) {
+            // 需要校验并初始化校验
+            check.setNeed(true);
+            check.setHandles(initValidHandle(clazz));
+        }
+        cache.put(clazz, check);
+        return check.isNeed();
     }
 
     @Override
     public void validate(Object target, Errors errors) {
+        CheckObject checkObject = cache.get(target.getClass());
+        for (ValidHandle handle : checkObject.getHandles()) {
+            handle.valid(target);
+        }
+    }
 
-
+    private List<ValidHandle> initValidHandle(Class<?> clazz) {
+        List<ValidHandle> list = new ArrayList<>();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation annotation : annotations) {
+                if (FinalValidatorUtils.annotationConstraints(annotation)) {
+                    try {
+                        list.add(FinalValidatorUtils.annotationToValidHandle(field.getName(), annotation));
+                    } catch (CheckException e) {
+                        throw new CheckException("校验异常对象："+clazz.getName(), e);
+                    }
+                }
+            }
+        }
+        return list;
     }
 }

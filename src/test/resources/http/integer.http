@@ -1,0 +1,11 @@
+### integer 1
+GET http://localhost:8080/integer?b=2&a=55
+
+### integer 2
+GET http://localhost:8080/integer?b=2&a=aa
+
+### integer 3
+GET http://localhost:8080/integer?b=-1&a=
+
+### integer 4
+GET http://localhost:8080/integer?b=-1&a=
