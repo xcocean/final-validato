@@ -88,7 +88,8 @@ FinalValidator.valid(param);
 ```
 
 
-### 非spring体系中使用
+## 非spring体系中使用
+调用 `FinalValidator.init()` 初始化后，任意地方调用`FinalValidator.valid(param)`即可。
 ```java
 public static void main(String[] args) {
     // 初始化校验，只需初始化一次即可
@@ -101,6 +102,11 @@ public static void main(String[] args) {
     FinalValidator.valid(param);
 }
 ```
+
+## 添加自己的自定义校验
+
+可以自定义注解，自己实现校验，请查看：[自定义注解](https://gitee.com/lingkang_top/final-validator/blob/master/doc/02.%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86.md)
+
 
 
 
