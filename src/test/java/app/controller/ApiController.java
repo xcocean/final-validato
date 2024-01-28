@@ -48,4 +48,24 @@ public class ApiController {
         FinalValidator.valid(param);
         return param;
     }
+
+    @RequestMapping("/null")
+    public Object aNull(@ValidObject NullParam param) {
+        return param;
+    }
+
+    @RequestMapping("/notNull")
+    public Object notNull(@ValidObject NotNullParam param) {
+        return param;
+    }
+
+    @RequestMapping("/assertFalse")
+    public Object assertFalse(@ValidObject AssertFalseParam param) {
+        return param;
+    }
+
+    @RequestMapping("/assertTrue")
+    public Object assertTrue(@ValidObject AssertTrueParam param) {
+        return param;
+    }
 }

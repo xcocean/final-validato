@@ -8,6 +8,7 @@ import java.lang.annotation.*;
  * 注解的属性的值是否符合自定义正则表达式<br/>
  * value为自定义校验的表达式<br/>
  * 需要注意，校验的对象属性必定不为null。底层校验时会提前判空<br/>
+ * 默认返回 {字段名称} 数据校验不通过
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -23,7 +24,7 @@ public @interface Pattern {
     String value() default "";
 
     /**
-     * 校验失败时返回的消息，返回例示 message ，若为空时，将返回 {字段名称}不能为空
+     * 校验失败时返回的消息，返回例示 message
      */
     String message() default "";
 

@@ -28,6 +28,10 @@ public class FinalValidatorUtils {
         annotation.add(NotEmpty.class);
         annotation.add(Email.class);
         annotation.add(Pattern.class);
+        annotation.add(Null.class);
+        annotation.add(NotNull.class);
+        annotation.add(AssertFalse.class);
+        annotation.add(AssertTrue.class);
     }
 
     /**
@@ -96,6 +100,18 @@ public class FinalValidatorUtils {
         } else if (annotation.annotationType() == Pattern.class) {
             Pattern pattern = (Pattern) annotation;
             return new PatternHandle(name, pattern.message(), pattern.tag(), pattern.value());
+        } else if (annotation.annotationType() == Null.class) {
+            Null aNull = (Null) annotation;
+            return new NullHandle(name, aNull.message(), aNull.tag());
+        } else if (annotation.annotationType() == NotNull.class) {
+            NotNull notNull = (NotNull) annotation;
+            return new NotNullHandle(name, notNull.message(), notNull.tag());
+        } else if (annotation.annotationType() == AssertFalse.class) {
+            AssertFalse assertFalse = (AssertFalse) annotation;
+            return new AssertFalseHandle(name, assertFalse.message(), assertFalse.tag());
+        } else if (annotation.annotationType() == AssertTrue.class) {
+            AssertTrue assertTrue = (AssertTrue) annotation;
+            return new AssertTrueHandle(name, assertTrue.message(), assertTrue.tag());
         }
 
         // 可能是自定义的

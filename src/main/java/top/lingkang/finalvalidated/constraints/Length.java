@@ -9,6 +9,7 @@ import java.lang.annotation.*;
  * 通常用于校验string字符串，注意，其它类型将被 toString() 后比较<br/>
  * 类型：short, int, long、BigDecimal 将被 toString() 后比较<br/>
  * 需要注意，若min=0，则对象可能为空值<br/>
+ * 默认返回 {字段名称} 字符长度范围： {min} ~ {max}
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -26,7 +27,7 @@ public @interface Length {
     long max() default 0;
 
     /**
-     * 校验失败时返回的消息，返回例示 message ，若为空时，将返回 {字段名称}不能为空
+     * 校验失败时返回的消息，返回例示 message
      */
     String message() default "";
 

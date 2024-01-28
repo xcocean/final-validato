@@ -6,6 +6,7 @@ import java.lang.annotation.*;
  * @author lingkang<br/>
  * created by 2024/1/26<br/>
  * 注解的属性必定不为空、但可以为空格字符<br/>
+ * 默认返回 {字段名称}不能为空
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -13,7 +14,7 @@ import java.lang.annotation.*;
 public @interface NotEmpty {
 
     /**
-     * 校验失败时返回的消息，返回例示 message ，若为空时，将返回 {字段名称}不能为空
+     * 校验失败时返回的消息，返回例示 message
      */
     String message() default "";
 

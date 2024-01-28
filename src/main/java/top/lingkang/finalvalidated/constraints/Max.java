@@ -7,6 +7,7 @@ import java.lang.annotation.*;
  * created by 2024/1/27<br/>
  * 注解的属性最大值，大于等于<br/>
  * 类型：short, int, long、float、double及其包装类、BigDecimal<br/>
+ * 默认返回 {字段名称} 不能大于 {value}
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -19,7 +20,7 @@ public @interface Max {
     long value() default 0;
 
     /**
-     * 校验失败时返回的消息，返回例示 message ，若为空时，将返回 {字段名称}不能为空
+     * 校验失败时返回的消息，返回例示 message
      */
     String message() default "";
 
