@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author lingkang<br/>
  * created by 2024/1/27<br/>
- * 注解的属性最大值，大于等于<br/>
+ * 注解的属性最大值，不大于等于<br/>
  * 类型：short, int, long、float、double及其包装类、BigDecimal<br/>
  * 默认返回 {字段名称} 不能大于 {value}
  */
