@@ -23,5 +23,6 @@ public class Demo04 {
             System.out.println("这不是一个有效的手机号码");
         }
         Validator.isCitizenId("");
+        Validator.isGeneral("");
     }
 }

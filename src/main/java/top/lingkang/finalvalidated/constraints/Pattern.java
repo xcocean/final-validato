@@ -19,7 +19,8 @@ public @interface Pattern {
      * 需要注意，校验的对象属性必定不为null。底层校验时会提前判空<br/>
      * 并给出一些正则例子：<br/>
      * 判断手机号：^1[3-9]\\d{9}$
-     * 判断手机号：^1[3-9]\\d{9}$
+     * 判断纯汉字：[\u2E80-\u2EFF\u2F00-\u2FDF\u31C0-\u31EF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uD840\uDC00-\uD869\uDEDF\uD869\uDF00-\uD86D\uDF3F\uD86D\uDF40-\uD86E\uDC1F\uD86E\uDC20-\uD873\uDEAF\uD87E\uDC00-\uD87E\uDE1F]+
+     * 必须包括：英文字母、数字、下划线：^\w+$
      */
     String value() default "";
 
