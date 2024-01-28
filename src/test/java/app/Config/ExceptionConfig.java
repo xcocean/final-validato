@@ -19,9 +19,11 @@ public class ExceptionConfig {
      */
     @ExceptionHandler(ValidatedException.class)
     public Object v(ValidatedException e) {
-        Map<String,Object> map=new HashMap<>();
-        map.put("code",1);
-        map.put("msg",e.getMessage());
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 1);
+        map.put("msg", e.getMessage());
+        // map.put("object", e.getObjectName());
+        // map.put("filed", e.getFiledName());
         return map;
     }
 }
