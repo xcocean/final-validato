@@ -115,6 +115,14 @@ public static void main(String[] args) {
 
 可以自定义注解，自己实现校验，请查看：[自定义注解](https://gitee.com/lingkang_top/final-validator/blob/master/doc/02.%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86.md)
 
+## 自定义消息文字
+`final-validator` 默认的消息文字位于 `defaultValidated.properties`。
+若您想自定义，可在`resources`下添加一个 **finalValidated.properties**配置文件，框架初始化时将会加载并覆盖原有的默认配置。
+```properties
+NotBlank={message} 不能是空值
+```
+具体key-value需要参考：[defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/src/main/resources/defaultValidated.properties)
+
 ## 性能
 
 底层缓存了注解处理，性能几乎可以忽略不计。
@@ -138,5 +146,5 @@ public static void main(String[] args) {
 ## 其它
 
 * 有更好的建议请提 [Issues](https://gitee.com/lingkang_top/final-validator/issues)
-* 使用快照版本 [SNAPSHOT](https://gitee.com/lingkang_top/final-validator/issues)
-
+* 使用快照版本 [SNAPSHOT](https://gitee.com/lingkang_top/final-validator/blob/master/doc/03.%E4%BD%BF%E7%94%A8%E5%BF%AB%E7%85%A7.md)
+* 默认的校验消息 [defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/src/main/resources/defaultValidated.properties)
