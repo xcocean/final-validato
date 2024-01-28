@@ -1,11 +1,10 @@
 package app.controller;
 
-import app.param.BigDecimalParam;
-import app.param.IntegerParam;
-import app.param.LoginParam;
-import app.param.StringParam;
+import app.param.*;
+import custom.TestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.lingkang.finalvalidated.core.FinalValidator;
 import top.lingkang.finalvalidated.core.ValidObject;
 
 /**
@@ -20,17 +19,33 @@ public class ApiController {
     }
 
     @RequestMapping("/integer")
-    public Object integer(@ValidObject IntegerParam param){
+    public Object integer(@ValidObject IntegerParam param) {
         return param;
     }
 
     @RequestMapping("/string")
-    public Object string(@ValidObject StringParam param){
+    public Object string(@ValidObject StringParam param) {
         return param;
     }
 
     @RequestMapping("/bigDecimal")
-    public Object string(@ValidObject BigDecimalParam param){
+    public Object string(@ValidObject BigDecimalParam param) {
+        return param;
+    }
+
+    @RequestMapping("/email")
+    public Object email(@ValidObject EmailParam param) {
+        return param;
+    }
+
+    @RequestMapping("/pattern")
+    public Object pattern(@ValidObject PatternParam param) {
+        return param;
+    }
+
+    @RequestMapping("/custom")
+    public Object custom(TestParam param) {
+        FinalValidator.valid(param);
         return param;
     }
 }

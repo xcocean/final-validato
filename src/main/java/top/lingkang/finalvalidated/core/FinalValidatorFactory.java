@@ -14,7 +14,7 @@ import java.util.*;
  * @author lingkang
  * created by 2024/1/26
  */
-public class ValidatorFactory implements Validator {
+public class FinalValidatorFactory implements Validator {
     private static final Map<Class<?>, CheckObject> cache = new HashMap<>();
     public static final Properties message = new Properties();
 
@@ -53,7 +53,7 @@ public class ValidatorFactory implements Validator {
                     try {
                         list.add(FinalValidatorUtils.annotationToValidHandle(field.getName(), annotation));
                     } catch (CheckException e) {
-                        throw new CheckException("校验异常对象："+clazz.getName(), e);
+                        throw new CheckException("校验异常对象：" + clazz.getName(), e);
                     }
                 }
             }

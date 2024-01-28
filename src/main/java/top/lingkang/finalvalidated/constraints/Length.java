@@ -31,7 +31,7 @@ public @interface Length {
     String message() default "";
 
     /**
-     * 校验失败时返回的消息，优先级比 message 高，返回例示 {tag}不能为空
+     * 校验失败时返回的消息，优先级比 message 高，返回例示 {tag} 字符长度范围： {min} ~ {max}
      */
     String tag() default "";
 }

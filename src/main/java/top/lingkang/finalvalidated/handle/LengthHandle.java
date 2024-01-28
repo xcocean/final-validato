@@ -1,7 +1,7 @@
 package top.lingkang.finalvalidated.handle;
 
 import cn.hutool.core.util.StrUtil;
-import top.lingkang.finalvalidated.core.ValidatorFactory;
+import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.error.ValidatedException;
 
@@ -24,12 +24,12 @@ public class LengthHandle implements ValidHandle {
         if (min < 0)
             throw new CheckException("@Length 所配置的min值不能小于 0 ，属性名称：" + name);
         if (StrUtil.isNotEmpty(tag)) {
-            errorStr = ValidatorFactory.message.getProperty("Length")
+            errorStr = FinalValidatorFactory.message.getProperty("Length")
                     .replace("{message}", tag)
                     .replace("{min}", Long.toString(min))
                     .replace("{max}", Long.toString(max));
         } else if (StrUtil.isEmpty(message)) {
-            errorStr = ValidatorFactory.message.getProperty("Length")
+            errorStr = FinalValidatorFactory.message.getProperty("Length")
                     .replace("{message}", name)
                     .replace("{min}", Long.toString(min))
                     .replace("{max}", Long.toString(max));

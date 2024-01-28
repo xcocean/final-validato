@@ -1,7 +1,7 @@
 package top.lingkang.finalvalidated.handle;
 
 import cn.hutool.core.util.StrUtil;
-import top.lingkang.finalvalidated.core.ValidatorFactory;
+import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.error.ValidatedException;
 import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
@@ -19,11 +19,11 @@ public class MaxHandle implements ValidHandle {
 
     public MaxHandle(String name, String message, String tag, long value) {
         if (StrUtil.isNotEmpty(tag)) {
-            errorStr = ValidatorFactory.message.getProperty("Max")
+            errorStr = FinalValidatorFactory.message.getProperty("Max")
                     .replace("{message}", tag)
                     .replace("{value}", Long.toString(value));
         } else if (StrUtil.isEmpty(message)) {
-            errorStr = ValidatorFactory.message.getProperty("Max")
+            errorStr = FinalValidatorFactory.message.getProperty("Max")
                     .replace("{message}", name)
                     .replace("{value}", Long.toString(value));
         } else {

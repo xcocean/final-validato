@@ -7,7 +7,9 @@ import top.lingkang.finalvalidated.handle.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,14 +17,28 @@ import java.util.Set;
  * Created by 2024/1/27
  */
 public class FinalValidatorUtils {
-    private static final Set<Class<? extends Annotation>> ann = new HashSet<>();
+    private static final Set<Class<? extends Annotation>> annotation = new HashSet<>();
+    private static final Map<Class<? extends Annotation>, Class<? extends CustomValidHandle>> customHandle = new HashMap<>();
 
     static {
-        ann.add(NotBlank.class);
-        ann.add(Min.class);
-        ann.add(Max.class);
-        ann.add(Length.class);
-        ann.add(NotEmpty.class);
+        annotation.add(NotBlank.class);
+        annotation.add(Min.class);
+        annotation.add(Max.class);
+        annotation.add(Length.class);
+        annotation.add(NotEmpty.class);
+        annotation.add(Email.class);
+        annotation.add(Pattern.class);
+    }
+
+    /**
+     * 添加自定义注解和处理
+     *
+     * @param annotation  自定义的注解
+     * @param validHandle 自定义注解的校验处理
+     */
+    public static void addCustom(Class<? extends Annotation> annotation, Class<? extends CustomValidHandle> validHandle) {
+        FinalValidatorUtils.annotation.add(annotation);
+        customHandle.put(annotation, validHandle);
     }
 
     /**
@@ -41,14 +57,14 @@ public class FinalValidatorUtils {
      */
     public static boolean existsConstraints(Annotation[] annotations) {
         for (Annotation annotation : annotations) {
-            if (ann.contains(annotation.annotationType()))
+            if (FinalValidatorUtils.annotation.contains(annotation.annotationType()))
                 return true;
         }
         return false;
     }
 
     public static boolean annotationConstraints(Annotation annotation) {
-        return ann.contains(annotation.annotationType());
+        return FinalValidatorUtils.annotation.contains(annotation.annotationType());
     }
 
 
@@ -74,10 +90,26 @@ public class FinalValidatorUtils {
         } else if (annotation.annotationType() == NotEmpty.class) {
             NotEmpty notEmpty = (NotEmpty) annotation;
             return new NotEmptyHandle(name, notEmpty.message(), notEmpty.tag());
+        } else if (annotation.annotationType() == Email.class) {
+            Email email = (Email) annotation;
+            return new EmailHandle(name, email.message(), email.tag(), email.value());
+        } else if (annotation.annotationType() == Pattern.class) {
+            Pattern pattern = (Pattern) annotation;
+            return new PatternHandle(name, pattern.message(), pattern.tag(), pattern.value());
         }
 
-        // throw new ValidatedException("未支持的校验注解：" + annotation.annotationType());
-        return null;
+        // 可能是自定义的
+        Class<? extends CustomValidHandle> validHandle = customHandle.get(annotation.annotationType());
+        if (validHandle != null) {
+            try {
+                return validHandle.getConstructor(String.class, Annotation.class).newInstance(name, annotation);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            throw new CheckException(annotation.annotationType() + " 未找到对应的 ValidHandle 处理类实现！");
+        }
+
     }
 
     public static boolean notMin(Object o, long value) {

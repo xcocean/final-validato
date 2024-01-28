@@ -4,9 +4,9 @@ import java.lang.annotation.*;
 
 /**
  * @author lingkang<br/>
- * created by 2024/1/26<br/>
+ * created by 2024/1/27<br/>
  * 注解的属性最大值，大于等于<br/>
- * 类型：short, int, long、BigDecimal<br/>
+ * 类型：short, int, long、float、double及其包装类、BigDecimal<br/>
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 public @interface Max {
 
     /**
-     * 校验值
+     * 校验值，不能大于此值。例如 value=1，则1、0符合，2不符合
      */
     long value() default 0;
 
@@ -24,7 +24,7 @@ public @interface Max {
     String message() default "";
 
     /**
-     * 校验失败时返回的消息，优先级比 message 高，返回例示 {tag}不能为空
+     * 校验失败时返回的消息，优先级比 message 高，返回例示 {tag} 不能大于 {value}
      */
     String tag() default "";
 }

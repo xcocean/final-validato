@@ -1,7 +1,7 @@
 package top.lingkang.finalvalidated.handle;
 
 import cn.hutool.core.util.StrUtil;
-import top.lingkang.finalvalidated.core.ValidatorFactory;
+import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.error.ValidatedException;
 
@@ -17,9 +17,9 @@ public class NotBlankHandle implements ValidHandle {
 
     public NotBlankHandle(String name, String message, String tag) {
         if (StrUtil.isNotEmpty(tag)) {
-            errorStr = ValidatorFactory.message.getProperty("NotBlank").replace("{message}", tag);
+            errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", tag);
         } else if (StrUtil.isEmpty(message)) {
-            errorStr = ValidatorFactory.message.getProperty("NotBlank").replace("{message}", name);
+            errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", name);
         } else {
             errorStr = message;
         }
