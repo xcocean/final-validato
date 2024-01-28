@@ -21,12 +21,18 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 ## springmvc中
 
 ### 1、编写一个入参类
+
 ```java
+import top.lingkang.finalvalidated.constraints.Length;
+
 @Data
 public class LoginParam {
-    @NotBlank
+    @NotBlank// 不为空
+    @Length(min = 6, max=20) // 长度范围 6~20
     private String username;
+    
     @NotBlank
+    @Length(min = 6, max=20) // 长度范围 6~20
     private String password;
 }
 ```
@@ -129,6 +135,8 @@ public static void main(String[] args) {
 | @Email       | 注解的属性的值是否是邮箱   |
 | @Pattern     | 注解的属性的值是否符合自定义正则表达式   |
 
+## 其它
 
+有更好的建议请提 [Issues](https://gitee.com/lingkang_top/final-validator/issues)
 
 

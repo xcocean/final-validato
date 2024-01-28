@@ -41,6 +41,8 @@ public class FinalValidatorUtils {
      * @param validHandle 自定义注解的校验处理
      */
     public static void addCustom(Class<? extends Annotation> annotation, Class<? extends CustomValidHandle> validHandle) {
+        if (FinalValidatorUtils.annotation.contains(annotation))
+            throw new CheckException("不能重复添加自定义注解：" + annotation.getName());
         FinalValidatorUtils.annotation.add(annotation);
         customHandle.put(annotation, validHandle);
     }
