@@ -20,6 +20,7 @@ import java.util.Properties;
 /**
  * @author lingkang
  * Created by 2024/1/26
+ * spring 初始化配置
  */
 @Configuration
 public class FinalValidatorConfig {
@@ -29,7 +30,6 @@ public class FinalValidatorConfig {
 
     @Bean
     public FinalValidatorFactory finalValidatorFactory(@Qualifier("requestMappingHandlerAdapter") RequestMappingHandlerAdapter adapter) throws IOException {
-        log.info("final-validator 开始初始化");
         ConfigurableWebBindingInitializer initializer = (ConfigurableWebBindingInitializer) adapter.getWebBindingInitializer();
         FinalValidatorFactory finalValidatorFactory = new FinalValidatorFactory();
         initializer.setValidator(finalValidatorFactory);
@@ -51,7 +51,7 @@ public class FinalValidatorConfig {
             IoUtil.close(reader);
         }
 
-        log.info("final-validator 初始化完成");
+        log.info("final-validator Initialization completed");
         return finalValidatorFactory;
     }
 

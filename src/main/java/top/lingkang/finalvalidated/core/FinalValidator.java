@@ -65,7 +65,6 @@ public class FinalValidator {
             return;
         }
 
-        log.info("final-validator 开始初始化");
         try {
             FinalValidator.finalValidatorFactory = new FinalValidatorFactory();
 
@@ -87,9 +86,9 @@ public class FinalValidator {
             }
         } catch (Exception e) {
             FinalValidator.finalValidatorFactory = null;
-            throw new CheckException("初始化失败！", e);
+            throw new CheckException("final-validator 初始化失败！", e);
         }
-        log.info("final-validator 初始化完成");
+        log.info("final-validator Initialization completed");
     }
 
     /**
