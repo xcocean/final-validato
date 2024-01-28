@@ -12,6 +12,36 @@
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator</artifactId>
     <version>1.0.0</version>
+    <url>https://gitee.com/lingkang_top/final-validator</url>
+    <name>final-validator</name>
+    <description>final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围。</description>
+    <organization>
+        <name>lingkang</name>
+        <url>http://lingkang.top</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>lingkang</name>
+            <email>ling-kang@qq.com</email>
+            <organization>lingkang</organization>
+            <organizationUrl>http://lingkang.top</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Mulan Permissive Software License</name>
+            <url>http://license.coscl.org.cn/MulanPSL2 </url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://gitee.com/lingkang_top/final-validator</url>
+        <connection>https://gitee.com/lingkang_top/final-validator.git</connection>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
