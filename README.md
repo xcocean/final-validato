@@ -107,7 +107,9 @@ public static void main(String[] args) {
 
 可以自定义注解，自己实现校验，请查看：[自定义注解](https://gitee.com/lingkang_top/final-validator/blob/master/doc/02.%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86.md)
 
+## 性能
 
+底层缓存了注解处理，性能几乎可以忽略不计。
 
 
 
