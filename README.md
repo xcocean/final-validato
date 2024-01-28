@@ -125,6 +125,10 @@ NotBlank={message} 不能是空值
 ```
 具体key-value需要参考：[defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/src/main/resources/defaultValidated.properties)
 
+## 底层原理
+
+底层原理介绍：[https://lingkang.top/archives/final-validator-shou-lu-validator](https://lingkang.top/archives/final-validator-shou-lu-validator)
+
 ## 性能
 
 底层缓存了注解处理，性能几乎可以忽略不计。
