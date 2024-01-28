@@ -83,7 +83,8 @@ public class ExceptionConfig {
 ```java
 LoginParam param=new LoginParam();
 param.setUsername("admin");
-// 校验，失败时会通过 ValidatedException 异常抛出，能够通过 ValidatedException 获取到 字段名称、对象名称、错误信息等。
+// 校验，失败时会通过 ValidatedException 异常抛出，
+// 能够通过 ValidatedException 获取到 字段名称、对象名称、错误信息等。
 FinalValidator.valid(param);
 ```
 
@@ -98,7 +99,8 @@ public static void main(String[] args) {
     LoginParam param=new LoginParam();
     param.setUsername("admin");
 
-    // 校验，失败时会通过 ValidatedException 异常抛出，能够通过 ValidatedException 获取到 字段名称、对象名称、错误信息等。
+    // 校验，失败时会通过 ValidatedException 异常抛出，
+    // 能够通过 ValidatedException 获取到 字段名称、对象名称、错误信息等。
     FinalValidator.valid(param);
 }
 ```
@@ -111,6 +113,7 @@ public static void main(String[] args) {
 
 底层缓存了注解处理，性能几乎可以忽略不计。
 
+## 注解
 
 
 
