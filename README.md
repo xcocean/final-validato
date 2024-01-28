@@ -137,6 +137,6 @@ public static void main(String[] args) {
 
 ## 其它
 
-有更好的建议请提 [Issues](https://gitee.com/lingkang_top/final-validator/issues)
-
+* 有更好的建议请提 [Issues](https://gitee.com/lingkang_top/final-validator/issues)
+* 使用快照版本 [SNAPSHOT](https://gitee.com/lingkang_top/final-validator/issues)
 

@@ -15,6 +15,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
     <dependencies>
         <dependency>
@@ -78,7 +81,7 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
-                    <encoding>UTF-8</encoding>
+                    <encoding>utf8</encoding>
                     <!--<compilerArgs>
                         <arg>-parameters</arg>
                         <arg>-extdirs</arg>
@@ -110,6 +113,7 @@
                     <source>${java.version}</source>
                     <additionalJOption>-Xdoclint:none</additionalJOption>
                     <failOnError>false</failOnError>
+                    <encoding>utf8</encoding>
                 </configuration>
             </plugin>
 
