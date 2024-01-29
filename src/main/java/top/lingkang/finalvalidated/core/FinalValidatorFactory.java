@@ -1,7 +1,5 @@
 package top.lingkang.finalvalidated.core;
 
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.handle.ValidHandle;
 import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
@@ -14,11 +12,10 @@ import java.util.*;
  * @author lingkang
  * created by 2024/1/26
  */
-public class FinalValidatorFactory implements Validator {
+public class FinalValidatorFactory {
     private static final Map<Class<?>, CheckObject> cache = new HashMap<>();
     public static final Properties message = new Properties();
 
-    @Override
     public boolean supports(Class<?> clazz) {
         CheckObject check = cache.get(clazz);
         if (check != null)
@@ -35,8 +32,7 @@ public class FinalValidatorFactory implements Validator {
         return check.isNeed();
     }
 
-    @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(Object target) {
         CheckObject checkObject = cache.get(target.getClass());
         for (ValidHandle handle : checkObject.getHandles()) {
             handle.valid(target);

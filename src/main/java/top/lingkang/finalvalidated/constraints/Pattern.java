@@ -3,7 +3,7 @@ package top.lingkang.finalvalidated.constraints;
 import java.lang.annotation.*;
 
 /**
- * @author lingkang<br />
+ * @author lingkang <br/>
  * created by 2024/1/28<br/>
  * 注解的属性的值是否符合自定义正则表达式<br/>
  * value为自定义校验的表达式<br/>

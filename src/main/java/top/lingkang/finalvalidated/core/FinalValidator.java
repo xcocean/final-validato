@@ -33,7 +33,9 @@ import java.util.Properties;
  * <pre>
  *   LoginParam param=new LoginParam();<br/>
  *   param.setUsername("admin");<br/>
+ *   // 只需初始化一次 <br/>
  *   FinalValidator.init();<br/>
+ *   // 校验参数 <br/>
  *   FinalValidator.valid(param);
  * </pre>
  */
@@ -43,6 +45,9 @@ public class FinalValidator {
     private static FinalValidatorFactory finalValidatorFactory;
     private static boolean isSpring = false;
 
+    /**
+     * spring初始化时，使用构造函数传递参数
+     */
     public FinalValidator(FinalValidatorFactory finalValidatorFactory) {
         if (FinalValidator.finalValidatorFactory != null && !isSpring) {
             throw new CheckException("在spring系统中，不能提前调用 FinalValidator.init() 初始化 FinalValidator ，" +
@@ -53,6 +58,7 @@ public class FinalValidator {
     }
 
     /**
+     * 非spring体系中手动初始化校验
      * spring 体系中不需要调用此方法，spring会自动初始化
      */
     public static void init() {
@@ -110,10 +116,15 @@ public class FinalValidator {
      */
     public static void valid(Object target) {
         if (finalValidatorFactory.supports(target.getClass())) {
-            finalValidatorFactory.validate(target, null);
+            finalValidatorFactory.validate(target);
         }
     }
 
+    /**
+     * 添加自定义注解
+     * @param annotation 自定义的注解
+     * @param validHandle 自定义的校验处理
+     */
     public static void addCustom(Class<? extends Annotation> annotation, Class<? extends CustomValidHandle> validHandle) {
         if (annotation == null)
             throw new CheckException("annotation 不能为空！");

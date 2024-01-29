@@ -3,6 +3,7 @@ package top.lingkang.finalvalidated.error;
 /**
  * @author lingkang
  * Created by 2024/1/26
+ * 框架校验异常
  */
 public class ValidatedException extends RuntimeException{
     private String objectName;

@@ -19,4 +19,6 @@ public class StringParam {
     private String c;
     @NotEmpty
     private String d;
+    @NotBlank
+    private int e;
 }

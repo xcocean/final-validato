@@ -28,11 +28,15 @@ public class FinalValidatorConfig {
     @Autowired
     private ResourceLoader resourceLoader;
 
+    /**
+     * FinalValidatorFactorySpring 内置 FinalValidatorFactory ，用于折中调用。
+     * 主要目的是让FinalValidatorFactory能够脱离spring框架使用
+     */
     @Bean
-    public FinalValidatorFactory finalValidatorFactory(@Qualifier("requestMappingHandlerAdapter") RequestMappingHandlerAdapter adapter) throws IOException {
+    public FinalValidatorFactorySpring finalValidatorFactorySpring(@Qualifier("requestMappingHandlerAdapter") RequestMappingHandlerAdapter adapter) throws IOException {
         ConfigurableWebBindingInitializer initializer = (ConfigurableWebBindingInitializer) adapter.getWebBindingInitializer();
-        FinalValidatorFactory finalValidatorFactory = new FinalValidatorFactory();
-        initializer.setValidator(finalValidatorFactory);
+        FinalValidatorFactorySpring validatorFactorySpring = new FinalValidatorFactorySpring(new FinalValidatorFactory());
+        initializer.setValidator(validatorFactorySpring);
 
         // 加载提示
         Resource resource = resourceLoader.getResource("classpath:defaultValidated.properties");
@@ -52,11 +56,11 @@ public class FinalValidatorConfig {
         }
 
         log.info("final-validator Initialization completed");
-        return finalValidatorFactory;
+        return validatorFactorySpring;
     }
 
     @Bean
-    public FinalValidator finalValidator(@Qualifier("finalValidatorFactory") FinalValidatorFactory finalValidatorFactory) {
-        return new FinalValidator(finalValidatorFactory);
+    public FinalValidator finalValidator(@Qualifier("finalValidatorFactorySpring") FinalValidatorFactorySpring spring) {
+        return new FinalValidator(spring.finalValidatorFactory);
     }
 }

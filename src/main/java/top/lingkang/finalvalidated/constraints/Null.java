@@ -3,11 +3,13 @@ package top.lingkang.finalvalidated.constraints;
 import java.lang.annotation.*;
 
 /**
- * @author lingkang<br />
+ * @author lingkang <br/>
  * created by 2024/1/28<br/>
  * 注解的属性必定是空，即 null 值，<br/>
  * 例如 /login?username=&password=123，中，username、password不为null，phone为null<br/>
- * 默认返回 {字段名称} 必须为空
+ * 默认返回 {字段名称} 必须为空<br/>
+ * 适用类型：string、Integer、Long、Boolean等包装类<br/>
+ * int、long、boolean等基础类型将不适用，将不能通过检查
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
