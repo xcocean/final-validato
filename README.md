@@ -10,7 +10,7 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 
 ## 引入依赖
 
-`jdk8+`  `springboot2.x 以上版本`   `springmvc5.x` `springmvc6.x` `非spring体系项目`
+`jdk8+`  `springboot2.x`  `springboot3.x`   `springmvc5.x` `springmvc6.x` `非spring体系项目`
 
 ```xml
 <dependency>
