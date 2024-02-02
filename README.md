@@ -16,7 +16,7 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 <dependency>
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
