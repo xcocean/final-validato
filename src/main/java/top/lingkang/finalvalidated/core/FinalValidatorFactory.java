@@ -1,5 +1,7 @@
 package top.lingkang.finalvalidated.core;
 
+import cn.hutool.core.util.StrUtil;
+import top.lingkang.finalvalidated.constraints.Tag;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.handle.ValidHandle;
 import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
@@ -47,7 +49,12 @@ public class FinalValidatorFactory {
             for (Annotation annotation : annotations) {
                 if (FinalValidatorUtils.annotationConstraints(annotation)) {
                     try {
-                        list.add(FinalValidatorUtils.annotationToValidHandle(field.getName(), annotation));
+                        String strTag = null;
+                        Tag tag = field.getAnnotation(Tag.class);
+                        if (tag != null && StrUtil.isNotEmpty(tag.value())) {
+                            strTag = tag.value();
+                        }
+                        list.add(FinalValidatorUtils.annotationToValidHandle(field.getName(), annotation, strTag));
                     } catch (CheckException e) {
                         throw new CheckException("校验异常对象：" + clazz.getName(), e);
                     }

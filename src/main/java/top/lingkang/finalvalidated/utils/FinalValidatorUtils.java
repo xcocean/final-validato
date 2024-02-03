@@ -80,40 +80,40 @@ public class FinalValidatorUtils {
      * @param name       对象属性名称
      * @param annotation 注解
      */
-    public static ValidHandle annotationToValidHandle(String name, Annotation annotation) {
+    public static ValidHandle annotationToValidHandle(String name, Annotation annotation, String tag) {
         if (annotation.annotationType() == NotBlank.class) {
             NotBlank notBlank = (NotBlank) annotation;
-            return new NotBlankHandle(name, notBlank.message(), notBlank.tag());
+            return new NotBlankHandle(name, notBlank.message(), tag == null ? notBlank.tag() : tag);
         } else if (annotation.annotationType() == Min.class) {
             Min min = (Min) annotation;
-            return new MinHandle(name, min.message(), min.tag(), min.value());
+            return new MinHandle(name, min.message(), tag == null ? min.tag() : tag, min.value());
         } else if (annotation.annotationType() == Max.class) {
             Max max = (Max) annotation;
-            return new MaxHandle(name, max.message(), max.tag(), max.value());
+            return new MaxHandle(name, max.message(), tag == null ? max.tag() : tag, max.value());
         } else if (annotation.annotationType() == Length.class) {
             Length length = (Length) annotation;
-            return new LengthHandle(name, length.message(), length.tag(), length.min(), length.max());
+            return new LengthHandle(name, length.message(), tag == null ? length.tag() : tag, length.min(), length.max());
         } else if (annotation.annotationType() == NotEmpty.class) {
             NotEmpty notEmpty = (NotEmpty) annotation;
-            return new NotEmptyHandle(name, notEmpty.message(), notEmpty.tag());
+            return new NotEmptyHandle(name, notEmpty.message(), tag == null ? notEmpty.tag() : tag);
         } else if (annotation.annotationType() == Email.class) {
             Email email = (Email) annotation;
-            return new EmailHandle(name, email.message(), email.tag(), email.value());
+            return new EmailHandle(name, email.message(), tag == null ? email.tag() : tag, email.value());
         } else if (annotation.annotationType() == Pattern.class) {
             Pattern pattern = (Pattern) annotation;
-            return new PatternHandle(name, pattern.message(), pattern.tag(), pattern.value());
+            return new PatternHandle(name, pattern.message(), tag == null ? pattern.tag() : tag, pattern.value());
         } else if (annotation.annotationType() == Null.class) {
             Null aNull = (Null) annotation;
-            return new NullHandle(name, aNull.message(), aNull.tag());
+            return new NullHandle(name, aNull.message(), tag == null ? aNull.tag() : tag);
         } else if (annotation.annotationType() == NotNull.class) {
             NotNull notNull = (NotNull) annotation;
-            return new NotNullHandle(name, notNull.message(), notNull.tag());
+            return new NotNullHandle(name, notNull.message(), tag == null ? notNull.tag() : tag);
         } else if (annotation.annotationType() == AssertFalse.class) {
             AssertFalse assertFalse = (AssertFalse) annotation;
-            return new AssertFalseHandle(name, assertFalse.message(), assertFalse.tag());
+            return new AssertFalseHandle(name, assertFalse.message(), tag == null ? assertFalse.tag() : tag);
         } else if (annotation.annotationType() == AssertTrue.class) {
             AssertTrue assertTrue = (AssertTrue) annotation;
-            return new AssertTrueHandle(name, assertTrue.message(), assertTrue.tag());
+            return new AssertTrueHandle(name, assertTrue.message(), tag == null ? assertTrue.tag() : tag);
         }
 
         // 可能是自定义的

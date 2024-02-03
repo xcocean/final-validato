@@ -26,15 +26,17 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 
 ```java
 import top.lingkang.finalvalidated.constraints.Length;
+import top.lingkang.finalvalidated.constraints.Tag;
 
 @Data
 public class LoginParam {
     @NotBlank// 不为空
-    @Length(min = 6, max=20) // 长度范围 6~20
+    @Length(min = 6, max = 20) // 长度范围 6~20
     private String username;
-    
+
+    @Tag("密码")
     @NotBlank
-    @Length(min = 6, max=20) // 长度范围 6~20
+    @Length(min = 6, max = 20) // 长度范围 6~20
     private String password;
 }
 ```
@@ -80,13 +82,19 @@ public class ExceptionConfig {
 `/login?username=123&password=`
 返回结果
 ```json
-{"msg":"password 不能为空","code":1}
+{"msg":"username 字符长度范围： 6 ~ 20","code":1}
 ```
 
-`/login?username=123&password=123`
+`/login?username=123456&password=123`
 返回结果
 ```json
-{"username":"123","password":"123"}
+{"msg":"密码 字符长度范围： 6 ~ 20","code":1}
+```
+
+`/login?username=123456&password=12345678`
+返回结果
+```json
+{"username":"123456","password":"12345678"}
 ```
 
 若你想直接校验某个参数对象，可以直接调用：
@@ -148,8 +156,9 @@ NotBlank={message} 不能是空值
 | @Length      | 注解的属性的长度，指定最小长度和最大长度，min与max不能相等    |
 | @AssertFalse | 验证注解的元素值是否是 false ，当值为 false 时将通过校验 |
 | @AssertTrue  | 验证注解的元素值是否是 true ，当值为 true 时将通过校验   |
-| @Email       | 注解的属性的值是否是邮箱   |
-| @Pattern     | 注解的属性的值是否符合自定义正则表达式   |
+| @Email       | 注解的属性的值是否是邮箱                        |
+| @Pattern     | 注解的属性的值是否符合自定义正则表达式                 |
+| @Tag         | 注解的属性的tag值，将会覆盖该字段其他注解的所有tag值(`v1.1.1`)     |
 
 ## 其它
 
