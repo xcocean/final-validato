@@ -16,6 +16,7 @@ public class MinHandle implements ValidHandle {
     private String name;
     private long value;
     private String errorStr;
+    private String notNullStr;
 
     public MinHandle(String name, String message, String tag, long value) {
         if (StrUtil.isNotEmpty(tag)) {
@@ -31,6 +32,7 @@ public class MinHandle implements ValidHandle {
         }
         this.name = name;
         this.value = value;
+        notNullStr = FinalValidatorFactory.message.getProperty("NotEmpty").replace("{message}", name);
     }
 
     @Override
@@ -43,7 +45,10 @@ public class MinHandle implements ValidHandle {
         } catch (Exception e) {
             throw new CheckException(e);
         }
-        if (o == null || FinalValidatorUtils.notMin(o, value)) {
+        if (o == null) {
+            throw new ValidatedException(notNullStr, target.getClass().getSimpleName(), name);
+        }
+        if (FinalValidatorUtils.notMin(o, value)) {
             throw new ValidatedException(errorStr, target.getClass().getSimpleName(), name);
         }
     }
