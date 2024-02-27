@@ -3,16 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
     <groupId>top.lingkang</groupId>
-    <artifactId>final-validator</artifactId>
-    <version>1.1.2</version>
+    <artifactId>final-validator-parent</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <url>https://gitee.com/lingkang_top/final-validator</url>
+    <modules>
+        <module>final-validator</module>
+        <module>final-validator-test</module>
+    </modules>
     <name>final-validator</name>
     <description>final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围。</description>
     <organization>
@@ -49,46 +48,7 @@
         <!-- 编译时的编码 -->
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-            <version>5.8.25</version>
-        </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.1</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-http -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-http</artifactId>
-            <version>5.8.25</version>
-            <scope>test</scope>
-        </dependency>
-
-
-    </dependencies>
     <distributionManagement>
         <snapshotRepository>
             <id>maven-public</id> <!-- 此处id与setting.xml中的服务id保持一致 -->
