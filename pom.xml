@@ -11,6 +11,7 @@
     <modules>
         <module>final-validator</module>
         <module>final-validator-test</module>
+        <module>final-validator-solon</module>
     </modules>
     <name>final-validator</name>
     <description>final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围。</description>

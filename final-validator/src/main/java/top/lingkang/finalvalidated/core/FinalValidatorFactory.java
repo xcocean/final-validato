@@ -63,4 +63,11 @@ public class FinalValidatorFactory {
         }
         return list;
     }
+
+    /**
+     * 清理缓存
+     */
+    public void clearCache(){
+        cache.clear();
+    }
 }

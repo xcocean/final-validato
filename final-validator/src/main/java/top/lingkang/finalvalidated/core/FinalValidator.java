@@ -98,21 +98,25 @@ public class FinalValidator {
     }
 
     /**
-     * 手动校验
-     * <pre>
+     * 手动校验:
+     * <pre>{@code
      *         LoginParam param=new LoginParam();
      *         param.setUsername("admin");
      *         FinalValidator.valid(param);
+     * }
      * </pre>
-     * 非spring体系下应该先手动初始化
-     * <pre>
+     * 非spring体系下应该先手动初始化:
+     * <pre>{@code
+     *         FinalValidator.init()
      *         LoginParam param=new LoginParam();
      *         param.setUsername("admin");
      *         FinalValidator.init();
      *         FinalValidator.valid(param);
+     * }
      * </pre>
      *
      * @param target 入参对象，其属性有final-validator校验注解时，会将其校验
+     * @throws NullPointerException 未初始化化时，调用将会报空指针，请初始化: <pre>{@code FinalValidator.init()}</pre>
      */
     public static void valid(Object target) {
         if (finalValidatorFactory.supports(target.getClass())) {
@@ -121,8 +125,20 @@ public class FinalValidator {
     }
 
     /**
+     * 判断这个类是否需要校验，存在 final-validator 的条件注解属性才会进行校验
+     *
+     * @param clazz 对象类
+     * @return true 需要校验。false 不需要校验
+     * @throws NullPointerException 未初始化化时，调用将会报空指针，请初始化: <pre>{@code FinalValidator.init()}</pre>
+     */
+    public static boolean supports(Class<?> clazz) {
+        return finalValidatorFactory.supports(clazz);
+    }
+
+    /**
      * 添加自定义注解
-     * @param annotation 自定义的注解
+     *
+     * @param annotation  自定义的注解
      * @param validHandle 自定义的校验处理
      */
     public static void addCustom(Class<? extends Annotation> annotation, Class<? extends CustomValidHandle> validHandle) {
@@ -133,5 +149,7 @@ public class FinalValidator {
 
         // 添加到自定义
         FinalValidatorUtils.addCustom(annotation, validHandle);
+        // 添加自定义注解时，将缓存清理
+        finalValidatorFactory.clearCache();
     }
 }
