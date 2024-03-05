@@ -16,7 +16,7 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 <dependency>
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator</artifactId>
-    <version>1.1.2</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 [版本查看](https://mvnrepository.com/artifact/top.lingkang/final-validator)
@@ -109,6 +109,7 @@ FinalValidator.valid(param);
 
 
 ## 非spring体系中使用
+
 调用 `FinalValidator.init()` 初始化后，任意地方调用`FinalValidator.valid(param)`即可。
 ```java
 public static void main(String[] args) {
@@ -123,6 +124,10 @@ public static void main(String[] args) {
     FinalValidator.valid(param);
 }
 ```
+
+## solon 中使用
+
+
 
 ## 添加自己的自定义校验
 

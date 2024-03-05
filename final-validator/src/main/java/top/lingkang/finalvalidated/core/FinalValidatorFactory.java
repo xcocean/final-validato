@@ -54,7 +54,7 @@ public class FinalValidatorFactory {
                         if (tag != null && StrUtil.isNotEmpty(tag.value())) {
                             strTag = tag.value();
                         }
-                        list.add(FinalValidatorUtils.annotationToValidHandle(field.getName(), annotation, strTag));
+                        list.add(FinalValidatorUtils.annotationToValidHandle(field, annotation, strTag));
                     } catch (CheckException e) {
                         throw new CheckException("校验异常对象：" + clazz.getName(), e);
                     }

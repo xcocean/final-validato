@@ -1,6 +1,9 @@
 package demo;
 
 import custom.TestParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.NOPLogger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -12,10 +15,15 @@ import java.util.List;
  * Created by 2024/3/5
  */
 public class Demo05 {
+
     public static void main(String[] args) throws Exception {
-        long start = System.currentTimeMillis();
-        field();
-        System.out.println("耗时：" + (System.currentTimeMillis() - start));
+        long end = 0L, start = System.currentTimeMillis();
+        for (int i = 0; i < 12; i++) {
+            List<Object> list = field();
+            end = System.currentTimeMillis();
+            System.out.println("耗时：" + (end - start));
+            start = end;
+        }
     }
 
     private static List<Object> field() throws Exception {
@@ -26,8 +34,8 @@ public class Demo05 {
         List<Object> list = new ArrayList<>(8000);
         // 当做从缓存中拿
         Field field = TestParam.class.getDeclaredField("a");
+        field.setAccessible(true); // 做了访问操作，因为是缓存，所以提前执行
         for (int i = 0; i < 5000; i++) {
-            field.setAccessible(true);
             list.add(field.get(param));
         }
         return list;

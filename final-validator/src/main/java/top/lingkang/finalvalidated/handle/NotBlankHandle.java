@@ -2,7 +2,6 @@ package top.lingkang.finalvalidated.handle;
 
 import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.core.FinalValidatorFactory;
-import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.error.ValidatedException;
 
 import java.lang.reflect.Field;
@@ -13,32 +12,26 @@ import java.lang.reflect.Field;
  */
 public class NotBlankHandle implements ValidHandle {
     private String errorStr;
-    private String name;
+    private TakeValue takeValue;
+    private Field field;
 
-    public NotBlankHandle(String name, String message, String tag) {
+    public NotBlankHandle(Field field, String message, String tag) {
         if (StrUtil.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", tag);
         } else if (StrUtil.isEmpty(message)) {
-            errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", name);
+            errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", field.getName());
         } else {
             errorStr = message;
         }
-        this.name = name;
+        this.field=field;
+        takeValue = new TakeValue(field);
     }
 
     @Override
     public void valid(Object target) {
-        Object o = null;
-        try {
-            Field field = target.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            o = field.get(target);
-
-        } catch (Exception e) {
-            throw new CheckException(e);
-        }
-        if (o == null || StrUtil.isBlank(o.toString())) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), name);
+        Object take = takeValue.take(target);
+        if (take == null || StrUtil.isBlank(take.toString())) {
+            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
         }
     }
 }

@@ -13,39 +13,34 @@ import java.util.regex.Pattern;
  * Created by 2024/1/28
  */
 public class PatternHandle implements ValidHandle {
-    private String name;
+    private Field field;
+    private TakeValue takeValue;
     private String errorStr;
     private Pattern pattern;
 
-    public PatternHandle(String name, String message, String tag, String value) {
+    public PatternHandle(Field field, String message, String tag, String value) {
         if (StrUtil.isBlank(value)) {
-            throw new CheckException("@Pattern 所配置的正则表达式(value)不能为空！字段属性：" + name);
+            throw new CheckException("@Pattern 所配置的正则表达式(value)不能为空！字段属性：" + field.getName());
         }
         if (StrUtil.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("Pattern")
                     .replace("{message}", tag);
         } else if (StrUtil.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("Pattern")
-                    .replace("{message}", name);
+                    .replace("{message}", field.getName());
         } else {
             errorStr = message;
         }
-        this.name = name;
+        this.field = field;
+        takeValue = new TakeValue(field);
         pattern = Pattern.compile(value);
     }
 
     @Override
     public void valid(Object target) {
-        Object o = null;
-        try {
-            Field field = target.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            o = field.get(target);
-        } catch (Exception e) {
-            throw new CheckException(e);
-        }
+        Object o = takeValue.take(target);
         if (o == null || !pattern.matcher(o.toString()).matches()) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), name);
+            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
         }
     }
 }

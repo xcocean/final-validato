@@ -1,6 +1,7 @@
 package top.lingkang.finalvalidated.handle;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 
 /**
  * @author lingkang
@@ -9,21 +10,23 @@ import java.lang.annotation.Annotation;
  */
 public class CustomValidHandle implements ValidHandle {
 
-    protected String name;
+    protected Field field;
     protected Annotation annotation;
 
     /**
      * 初始化构造函数
-     * @param name 对象属性名称
+     *
+     * @param field      对象属性
      * @param annotation 自定义的注解对象
      */
-    public CustomValidHandle(String name, Annotation annotation) {
+    public CustomValidHandle(Field field, Annotation annotation) {
         this.annotation = annotation;
-        this.name = name;
+        this.field = field;
     }
 
     /**
      * 校验失败时，建议抛出 {@link top.lingkang.finalvalidated.error.ValidatedException} 异常
+     *
      * @param target 待校验对象
      */
     @Override

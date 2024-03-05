@@ -14,29 +14,33 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
- * @author lingkang<br />
+ * @author lingkang
  * Created by 2024/1/28<br/>
- * 可全局使用的校验，例如<br/>
- * <pre>
+ * 可全局使用的校验，例如
+ * <pre>{@code
  *     // spring 启动后
  *     FinalValidator.valid(loginParam);
+ * }
  * </pre>
  * 或者<br/>
- * <pre>
- *     \@Autowired <br/>
- *     private FinalValidator finalValidator;<br/>
- *     // ....<br/>
+ * <pre>{@code
+ *     @Autowired
+ *     private FinalValidator finalValidator;
+ *     // ....
  *
  *     finalValidator.valid(loginParam);
+ * }
  * </pre>
  * 若你想在静态非spring系统中使用，需要手动初始化:<br/>
- * <pre>
- *   LoginParam param=new LoginParam();<br/>
- *   param.setUsername("admin");<br/>
- *   // 只需初始化一次 <br/>
- *   FinalValidator.init();<br/>
- *   // 校验参数 <br/>
+ * <pre>{@code
+ *   // 只需初始化一次
+ *   FinalValidator.init();
+ *
+ *   LoginParam param=new LoginParam();
+ *   param.setUsername("admin");
+ *   // 校验参数
  *   FinalValidator.valid(param);
+ * }
  * </pre>
  */
 public class FinalValidator {
@@ -150,6 +154,10 @@ public class FinalValidator {
         // 添加到自定义
         FinalValidatorUtils.addCustom(annotation, validHandle);
         // 添加自定义注解时，将缓存清理
+        finalValidatorFactory.clearCache();
+    }
+
+    public static void clearCache(){
         finalValidatorFactory.clearCache();
     }
 }

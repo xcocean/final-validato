@@ -12,17 +12,18 @@ import java.lang.reflect.Field;
  * Created by 2024/1/26
  */
 public class LengthHandle implements ValidHandle {
-    private String name;
+    private Field field;
+    private TakeValue takeValue;
     private long min, max;
     private String errorStr;
 
-    public LengthHandle(String name, String message, String tag, long min, long max) {
+    public LengthHandle(Field field, String message, String tag, long min, long max) {
         if (min == max)
-            throw new CheckException("@Length 所配置的最大最小值不能相等，属性名称：" + name);
+            throw new CheckException("@Length 所配置的最大最小值不能相等，属性名称：" + field.getName());
         if (min > max)
-            throw new CheckException("@Length 所配置的min值不能大于max值，属性名称：" + name);
+            throw new CheckException("@Length 所配置的min值不能大于max值，属性名称：" + field.getName());
         if (min < 0)
-            throw new CheckException("@Length 所配置的min值不能小于 0 ，属性名称：" + name);
+            throw new CheckException("@Length 所配置的min值不能小于 0 ，属性名称：" + field.getName());
         if (StrUtil.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("Length")
                     .replace("{message}", tag)
@@ -30,31 +31,25 @@ public class LengthHandle implements ValidHandle {
                     .replace("{max}", Long.toString(max));
         } else if (StrUtil.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("Length")
-                    .replace("{message}", name)
+                    .replace("{message}", field.getName())
                     .replace("{min}", Long.toString(min))
                     .replace("{max}", Long.toString(max));
         } else {
             errorStr = message;
         }
-        this.name = name;
+        this.field = field;
         this.min = min;
         this.max = max;
+        takeValue = new TakeValue(field);
     }
 
     @Override
     public void valid(Object target) {
-        Object o = null;
-        try {
-            Field field = target.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            o = field.get(target);
-        } catch (Exception e) {
-            throw new CheckException(e);
-        }
-        if (o == null && min == 0)
+        if (min == 0)
             return;
+        Object o = takeValue.take(target);
         if (o == null || o.toString().length() < min || o.toString().length() > max) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), name);
+            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
         }
     }
 }

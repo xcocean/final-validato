@@ -4,7 +4,6 @@ import cn.hutool.core.io.IoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -33,7 +32,7 @@ public class FinalValidatorConfig {
      * 主要目的是让FinalValidatorFactory能够脱离spring框架使用
      */
     @Bean
-    public FinalValidatorFactorySpring finalValidatorFactorySpring(@Qualifier("requestMappingHandlerAdapter") RequestMappingHandlerAdapter adapter) throws IOException {
+    public FinalValidatorFactorySpring finalValidatorFactorySpring(@Autowired RequestMappingHandlerAdapter adapter) throws IOException {
         ConfigurableWebBindingInitializer initializer = (ConfigurableWebBindingInitializer) adapter.getWebBindingInitializer();
         FinalValidatorFactorySpring validatorFactorySpring = new FinalValidatorFactorySpring(new FinalValidatorFactory());
         initializer.setValidator(validatorFactorySpring);
@@ -60,7 +59,7 @@ public class FinalValidatorConfig {
     }
 
     @Bean
-    public FinalValidator finalValidator(@Qualifier("finalValidatorFactorySpring") FinalValidatorFactorySpring spring) {
+    public FinalValidator finalValidator(@Autowired FinalValidatorFactorySpring spring) {
         return new FinalValidator(spring.finalValidatorFactory);
     }
 }

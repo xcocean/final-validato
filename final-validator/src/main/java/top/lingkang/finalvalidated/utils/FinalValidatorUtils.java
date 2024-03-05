@@ -77,50 +77,51 @@ public class FinalValidatorUtils {
     /// ----------------------------------------------------------------------------------------------
 
     /**
-     * @param name       对象属性名称
+     * @param field      对象属性
      * @param annotation 注解
      */
-    public static ValidHandle annotationToValidHandle(String name, Annotation annotation, String tag) {
+    public static ValidHandle annotationToValidHandle(Field field, Annotation annotation, String tag) {
         if (annotation.annotationType() == NotBlank.class) {
             NotBlank notBlank = (NotBlank) annotation;
-            return new NotBlankHandle(name, notBlank.message(), tag == null ? notBlank.tag() : tag);
+            return new NotBlankHandle(field, notBlank.message(), tag == null ? notBlank.tag() : tag);
         } else if (annotation.annotationType() == Min.class) {
             Min min = (Min) annotation;
-            return new MinHandle(name, min.message(), tag == null ? min.tag() : tag, min.value());
+            return new MinHandle(field, min.message(), tag == null ? min.tag() : tag, min.value());
         } else if (annotation.annotationType() == Max.class) {
             Max max = (Max) annotation;
-            return new MaxHandle(name, max.message(), tag == null ? max.tag() : tag, max.value());
+            return new MaxHandle(field, max.message(), tag == null ? max.tag() : tag, max.value());
         } else if (annotation.annotationType() == Length.class) {
             Length length = (Length) annotation;
-            return new LengthHandle(name, length.message(), tag == null ? length.tag() : tag, length.min(), length.max());
+            return new LengthHandle(field, length.message(), tag == null ? length.tag() : tag, length.min(), length.max());
         } else if (annotation.annotationType() == NotEmpty.class) {
             NotEmpty notEmpty = (NotEmpty) annotation;
-            return new NotEmptyHandle(name, notEmpty.message(), tag == null ? notEmpty.tag() : tag);
+            return new NotEmptyHandle(field, notEmpty.message(), tag == null ? notEmpty.tag() : tag);
         } else if (annotation.annotationType() == Email.class) {
             Email email = (Email) annotation;
-            return new EmailHandle(name, email.message(), tag == null ? email.tag() : tag, email.value());
+            return new EmailHandle(field, email.message(), tag == null ? email.tag() : tag, email.value());
         } else if (annotation.annotationType() == Pattern.class) {
             Pattern pattern = (Pattern) annotation;
-            return new PatternHandle(name, pattern.message(), tag == null ? pattern.tag() : tag, pattern.value());
+            return new PatternHandle(field, pattern.message(), tag == null ? pattern.tag() : tag, pattern.value());
         } else if (annotation.annotationType() == Null.class) {
             Null aNull = (Null) annotation;
-            return new NullHandle(name, aNull.message(), tag == null ? aNull.tag() : tag);
+            return new NullHandle(field, aNull.message(), tag == null ? aNull.tag() : tag);
         } else if (annotation.annotationType() == NotNull.class) {
             NotNull notNull = (NotNull) annotation;
-            return new NotNullHandle(name, notNull.message(), tag == null ? notNull.tag() : tag);
+            return new NotNullHandle(field, notNull.message(), tag == null ? notNull.tag() : tag);
         } else if (annotation.annotationType() == AssertFalse.class) {
             AssertFalse assertFalse = (AssertFalse) annotation;
-            return new AssertFalseHandle(name, assertFalse.message(), tag == null ? assertFalse.tag() : tag);
+            return new AssertFalseHandle(field, assertFalse.message(), tag == null ? assertFalse.tag() : tag);
         } else if (annotation.annotationType() == AssertTrue.class) {
             AssertTrue assertTrue = (AssertTrue) annotation;
-            return new AssertTrueHandle(name, assertTrue.message(), tag == null ? assertTrue.tag() : tag);
+            return new AssertTrueHandle(field, assertTrue.message(), tag == null ? assertTrue.tag() : tag);
         }
 
         // 可能是自定义的
         Class<? extends CustomValidHandle> validHandle = customHandle.get(annotation.annotationType());
         if (validHandle != null) {
             try {
-                return validHandle.getConstructor(String.class, Annotation.class).newInstance(name, annotation);
+                return validHandle.getConstructor(Field.class, Annotation.class)
+                        .newInstance(field, annotation);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
