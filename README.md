@@ -127,19 +127,21 @@ public static void main(String[] args) {
 
 ## solon 中使用
 
+**solon：** [final-validator-solon](https://gitee.com/lingkang_top/final-validator/tree/master/final-validator-solon)
 
 
 ## 添加自己的自定义校验
 
-可以自定义注解，自己实现校验，请查看：[自定义注解](https://gitee.com/lingkang_top/final-validator/blob/master/doc/02.%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86.md)
+可以自定义注解，自己实现校验，请查看：[添加自定义注解](https://gitee.com/lingkang_top/final-validator/blob/master/doc/02.%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86.md)
 
 ## 自定义消息文字
+
 `final-validator` 默认的消息文字位于 `defaultValidated.properties`。
 若您想自定义，可在`resources`下添加一个 **finalValidated.properties**配置文件，框架初始化时将会加载并覆盖原有的默认配置。
 ```properties
 NotBlank={message} 不能是空值
 ```
-具体key-value需要参考：[defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/src/main/resources/defaultValidated.properties)
+具体key-value需要参考：[defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/final-validator/src/main/resources/defaultValidated.properties)
 
 ## 底层原理
 
