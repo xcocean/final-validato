@@ -13,7 +13,8 @@ import org.noear.solon.core.Plugin;
 public class FinalValidatorPlugin implements Plugin {
     @Override
     public void start(AppContext context) throws Throwable {
-        context.beanInterceptorAdd(ValidParams.class, new FinalValidatorInterceptor(), 666);
-        context.beanInterceptorAdd(Controller.class, new FinalValidatorInterceptor(), 667);
+        FinalValidatorInterceptor interceptor = new FinalValidatorInterceptor();
+        context.beanInterceptorAdd(ValidParams.class, interceptor, 666);
+        context.beanInterceptorAdd(Controller.class, interceptor, 667);
     }
 }

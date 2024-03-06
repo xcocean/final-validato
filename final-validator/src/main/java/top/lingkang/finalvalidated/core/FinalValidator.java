@@ -157,7 +157,11 @@ public class FinalValidator {
         finalValidatorFactory.clearCache();
     }
 
-    public static void clearCache(){
+    public static boolean isInitComplete() {
+        return finalValidatorFactory != null;
+    }
+
+    public static void clearCache() {
         finalValidatorFactory.clearCache();
     }
 }
