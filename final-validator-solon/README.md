@@ -10,6 +10,19 @@
     <artifactId>final-validator-solon</artifactId>
     <version>2.0.0</version>
 </dependency>
+
+<dependency>
+    <groupId>org.noear</groupId>
+    <artifactId>solon-web</artifactId>
+    <version>z.x.y</version>
+    <exclusions>
+        <!-- 排除 solon自带的 validation 提升性能-->
+        <exclusion>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.validation</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
 ```
 
 ## 检查对象
