@@ -2,11 +2,8 @@
 
 ## 介绍
 
-final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围。属于符合我国习惯的参数校验java库，能够独立使用，或者结合springmvc体系使用。
+final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围，符合国内开发习惯的参数校验java库。
 
-## 起始点
-
-开发的初衷是由于 `spring-boot-starter-validation` 用起来不习惯，无法直接自定义异常处理、字段多而数据格式不符合开发习惯。因而开发此库，让你脱离大量的`if`、`assert`的判断使用。
 
 ## 引入依赖
 

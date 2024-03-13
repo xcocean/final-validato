@@ -10,11 +10,10 @@
     <url>https://gitee.com/lingkang_top/final-validator</url>
     <modules>
         <module>final-validator</module>
-        <module>final-validator-test</module>
         <module>final-validator-solon</module>
     </modules>
     <name>final-validator</name>
-    <description>final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围。</description>
+    <description>final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围，符合国内开发习惯的参数校验java库</description>
     <organization>
         <name>lingkang</name>
         <url>http://lingkang.top</url>

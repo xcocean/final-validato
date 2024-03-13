@@ -68,4 +68,9 @@ public class ApiController {
     public Object assertTrue(@ValidObject AssertTrueParam param) {
         return param;
     }
+
+    @RequestMapping("er")
+    public Object er(@ValidObject ErParam param) {
+        return param;
+    }
 }
