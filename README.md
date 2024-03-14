@@ -165,6 +165,19 @@ NotBlank={message} 不能是空值
 | @Pattern     | 注解的属性的值是否符合自定义正则表达式                 |
 | @Tag         | 注解的属性的tag值，将会覆盖该字段其他注解的所有tag值(`v1.1.1`)     |
 
+## 常用验证
+
+#### 1. 验证账号
+```java
+@Pattern(value = "^[a-zA-Z0-9_]{4,20}$", message = "账号只能由字母、数字、下划线组成，并且长度为4~20个字符")
+private String username;
+```
+#### 2. 性别验证
+```java
+@Pattern(value = "男|女|保密", message = "性别只能是：男、女或保密")
+private String sex;
+```
+
 ## 其它
 
 * 有更好的建议请提 [Issues](https://gitee.com/lingkang_top/final-validator/issues)
