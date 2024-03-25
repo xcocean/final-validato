@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 public @interface Min {
 
     /**
-     * 校验值，不能小于此值。例如 value=1，则1、0不符合，2符合
+     * 校验值，不能小于此值。例如 value=1，则0不符合，1、2符合
      */
     long value() default 0;
 
