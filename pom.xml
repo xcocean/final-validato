@@ -12,7 +12,7 @@
         <module>final-validator</module>
         <module>final-validator-solon</module>
     </modules>
-    <name>final-validator</name>
+    <name>final-validator-parent</name>
     <description>final-validator 是一个JavaBean元数据校验模型和方法验证，能够自定义注解来扩展校验范围，符合国内开发习惯的参数校验java库</description>
     <organization>
         <name>lingkang</name>
@@ -145,13 +145,27 @@
         <repository>
             <id>central</id>
             <name>aliyun maven</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://repo.huaweicloud.com/repository/maven</url>
             <layout>default</layout>
             <!-- 是否开启发布版构件下载 -->
             <releases>
                 <enabled>true</enabled>
             </releases>
             <!-- 是否开启快照版构件下载 -->
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo1</id>
+            <url>https://repo1.maven.org/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo2</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>

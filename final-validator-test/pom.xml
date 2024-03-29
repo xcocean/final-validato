@@ -45,5 +45,34 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>aliyun maven</name>
+            <url>https://repo.huaweicloud.com/repository/maven</url>
+            <layout>default</layout>
+            <!-- 是否开启发布版构件下载 -->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <!-- 是否开启快照版构件下载 -->
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo1</id>
+            <url>https://repo1.maven.org/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>repo2</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
