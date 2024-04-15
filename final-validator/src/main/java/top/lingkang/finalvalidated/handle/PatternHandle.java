@@ -1,9 +1,9 @@
 package top.lingkang.finalvalidated.handle;
 
-import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.error.ValidatedException;
+import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
@@ -19,13 +19,13 @@ public class PatternHandle implements ValidHandle {
     private Pattern pattern;
 
     public PatternHandle(Field field, String message, String tag, String value) {
-        if (StrUtil.isBlank(value)) {
+        if (FinalValidatorUtils.isBlank(value)) {
             throw new CheckException("@Pattern 所配置的正则表达式(value)不能为空！字段属性：" + field.getName());
         }
-        if (StrUtil.isNotEmpty(tag)) {
+        if (FinalValidatorUtils.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("Pattern")
                     .replace("{message}", tag);
-        } else if (StrUtil.isEmpty(message)) {
+        } else if (FinalValidatorUtils.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("Pattern")
                     .replace("{message}", field.getName());
         } else {

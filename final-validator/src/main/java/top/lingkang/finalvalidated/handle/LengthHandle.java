@@ -1,9 +1,9 @@
 package top.lingkang.finalvalidated.handle;
 
-import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.error.ValidatedException;
+import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
 import java.lang.reflect.Field;
 
@@ -24,12 +24,12 @@ public class LengthHandle implements ValidHandle {
             throw new CheckException("@Length 所配置的min值不能大于max值，属性名称：" + field.getName());
         if (min < 0)
             throw new CheckException("@Length 所配置的min值不能小于 0 ，属性名称：" + field.getName());
-        if (StrUtil.isNotEmpty(tag)) {
+        if (FinalValidatorUtils.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("Length")
                     .replace("{message}", tag)
                     .replace("{min}", Long.toString(min))
                     .replace("{max}", Long.toString(max));
-        } else if (StrUtil.isEmpty(message)) {
+        } else if (FinalValidatorUtils.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("Length")
                     .replace("{message}", field.getName())
                     .replace("{min}", Long.toString(min))

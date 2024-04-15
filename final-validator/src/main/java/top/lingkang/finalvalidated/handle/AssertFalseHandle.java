@@ -1,8 +1,8 @@
 package top.lingkang.finalvalidated.handle;
 
-import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.ValidatedException;
+import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
 import java.lang.reflect.Field;
 
@@ -16,9 +16,9 @@ public class AssertFalseHandle implements ValidHandle {
     private TakeValue takeValue;
 
     public AssertFalseHandle(Field field, String message, String tag) {
-        if (StrUtil.isNotEmpty(tag)) {
+        if (FinalValidatorUtils.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("AssertFalse").replace("{message}", tag);
-        } else if (StrUtil.isEmpty(message)) {
+        } else if (FinalValidatorUtils.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("AssertFalse").replace("{message}", field.getName());
         } else {
             errorStr = message;

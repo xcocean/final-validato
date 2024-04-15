@@ -1,6 +1,5 @@
 package top.lingkang.finalvalidated.handle;
 
-import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.ValidatedException;
 import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
@@ -19,21 +18,22 @@ public class MinHandle implements ValidHandle {
     private String notNullStr;
 
     public MinHandle(Field field, String message, String tag, long value) {
-        if (StrUtil.isNotEmpty(tag)) {
+        if (FinalValidatorUtils.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("Min")
                     .replace("{message}", tag)
                     .replace("{value}", Long.toString(value));
-        } else if (StrUtil.isEmpty(message)) {
+            notNullStr = FinalValidatorFactory.message.getProperty("NotEmpty").replace("{message}", tag);
+        } else if (FinalValidatorUtils.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("Min")
                     .replace("{message}", field.getName())
                     .replace("{value}", Long.toString(value));
+            notNullStr = FinalValidatorFactory.message.getProperty("NotEmpty").replace("{message}", field.getName());
         } else {
             errorStr = message;
         }
-        this.value=value;
+        this.value = value;
         this.field = field;
         takeValue = new TakeValue(field);
-        notNullStr = FinalValidatorFactory.message.getProperty("NotEmpty").replace("{message}", field.getName());
     }
 
     @Override

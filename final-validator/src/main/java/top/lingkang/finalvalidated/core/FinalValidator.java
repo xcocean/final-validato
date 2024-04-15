@@ -1,6 +1,5 @@
 package top.lingkang.finalvalidated.core;
 
-import cn.hutool.core.io.IoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.lingkang.finalvalidated.error.CheckException;
@@ -82,7 +81,7 @@ public class FinalValidator {
             InputStream inputStream = FinalValidator.class.getClassLoader().getResourceAsStream("defaultValidated.properties");
             InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             FinalValidatorFactory.message.load(reader);
-            IoUtil.close(reader);
+            FinalValidatorUtils.close(reader);
 
             // 加载自定义的
             inputStream = FinalValidator.class.getClassLoader().getResourceAsStream("finalValidated.properties");
@@ -92,7 +91,7 @@ public class FinalValidator {
                 finalValidated.load(reader);
                 // 覆盖原有默认的
                 FinalValidatorFactory.message.putAll(finalValidated);
-                IoUtil.close(reader);
+                FinalValidatorUtils.close(reader);
             }
         } catch (Exception e) {
             FinalValidator.finalValidatorFactory = null;

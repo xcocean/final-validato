@@ -1,7 +1,6 @@
 package top.lingkang.finalvalidated.handle;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 /**
  * 反射取值
@@ -10,12 +9,11 @@ import java.lang.reflect.Modifier;
  * @create by 2024/3/5 10:09
  */
 class TakeValue {
-    private Field field;
+    private volatile Field field;
 
     public TakeValue(Field field) {
         this.field = field;
-        if (!Modifier.isPublic(field.getModifiers()))
-            field.setAccessible(true);
+        field.setAccessible(true);
     }
 
     public Object take(Object value) {

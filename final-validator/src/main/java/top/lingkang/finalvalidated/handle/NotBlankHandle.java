@@ -1,8 +1,8 @@
 package top.lingkang.finalvalidated.handle;
 
-import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.core.FinalValidatorFactory;
 import top.lingkang.finalvalidated.error.ValidatedException;
+import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
 import java.lang.reflect.Field;
 
@@ -16,21 +16,21 @@ public class NotBlankHandle implements ValidHandle {
     private Field field;
 
     public NotBlankHandle(Field field, String message, String tag) {
-        if (StrUtil.isNotEmpty(tag)) {
+        if (FinalValidatorUtils.isNotEmpty(tag)) {
             errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", tag);
-        } else if (StrUtil.isEmpty(message)) {
+        } else if (FinalValidatorUtils.isEmpty(message)) {
             errorStr = FinalValidatorFactory.message.getProperty("NotBlank").replace("{message}", field.getName());
         } else {
             errorStr = message;
         }
-        this.field=field;
+        this.field = field;
         takeValue = new TakeValue(field);
     }
 
     @Override
     public void valid(Object target) {
         Object take = takeValue.take(target);
-        if (take == null || StrUtil.isBlank(take.toString())) {
+        if (take == null || FinalValidatorUtils.isBlank(take.toString())) {
             throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
         }
     }

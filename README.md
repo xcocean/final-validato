@@ -13,7 +13,7 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 <dependency>
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 [版本查看](https://mvnrepository.com/artifact/top.lingkang/final-validator)
@@ -181,6 +181,6 @@ private String sex;
 ## 其它
 
 * 有更好的建议请提 [Issues](https://gitee.com/lingkang_top/final-validator/issues)
-* 使用快照版本 [SNAPSHOT](https://gitee.com/lingkang_top/final-validator/blob/master/doc/03.%E4%BD%BF%E7%94%A8%E5%BF%AB%E7%85%A7.md)
-* 默认的校验消息 [defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/src/main/resources/defaultValidated.properties)
+* 使用快照版本 [SNAPSHOT](https://gitee.com/lingkang_top/final-validator/blob/master/doc/03.%E4%BD%BF%E7%94%A8%E5%BF%AB%E7%85%A7%E7%89%88%E6%9C%AC.md)
+* 默认的校验消息 [defaultValidated.properties](https://gitee.com/lingkang_top/final-validator/blob/master/final-validator/src/main/resources/defaultValidated.properties)
 * 作者在积极优化中，[版本发布说明](https://gitee.com/lingkang_top/final-validator/blob/master/doc/99.%E5%8F%91%E7%89%88.md)

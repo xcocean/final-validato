@@ -1,6 +1,5 @@
 package top.lingkang.finalvalidated.core;
 
-import cn.hutool.core.util.StrUtil;
 import top.lingkang.finalvalidated.constraints.Tag;
 import top.lingkang.finalvalidated.error.CheckException;
 import top.lingkang.finalvalidated.handle.ValidHandle;
@@ -51,7 +50,7 @@ public class FinalValidatorFactory {
                     try {
                         String strTag = null;
                         Tag tag = field.getAnnotation(Tag.class);
-                        if (tag != null && StrUtil.isNotEmpty(tag.value())) {
+                        if (tag != null && FinalValidatorUtils.isNotEmpty(tag.value())) {
                             strTag = tag.value();
                         }
                         list.add(FinalValidatorUtils.annotationToValidHandle(field, annotation, strTag));
@@ -67,7 +66,7 @@ public class FinalValidatorFactory {
     /**
      * 清理缓存
      */
-    public void clearCache(){
+    public void clearCache() {
         cache.clear();
     }
 }

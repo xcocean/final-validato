@@ -1,6 +1,5 @@
 package top.lingkang.finalvalidated.core;
 
-import cn.hutool.core.io.IoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,7 +41,7 @@ public class FinalValidatorConfig {
         Resource resource = resourceLoader.getResource("classpath:defaultValidated.properties");
         InputStreamReader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
         FinalValidatorFactory.message.load(reader);
-        IoUtil.close(reader);
+        FinalValidatorUtils.close(reader);
 
         // 加载自定义的
         resource = resourceLoader.getResource("classpath:finalValidated.properties");
@@ -51,7 +51,7 @@ public class FinalValidatorConfig {
             finalValidated.load(reader);
             // 覆盖原有默认的
             FinalValidatorFactory.message.putAll(finalValidated);
-            IoUtil.close(reader);
+            FinalValidatorUtils.close(reader);
         }
 
         log.info("final-validator Initialization completed");
