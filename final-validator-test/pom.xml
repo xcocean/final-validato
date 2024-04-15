@@ -6,7 +6,7 @@
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator-test</artifactId>
     <name>final-validator-test</name>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
