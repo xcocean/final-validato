@@ -7,6 +7,7 @@ import org.noear.solon.annotation.Mapping;
 import top.lingkang.finalvalidated.core.ValidObject;
 import top.lingkang.fv.solon.test.config.MyBean;
 import top.lingkang.fv.solon.test.param.LoginParam;
+import top.lingkang.fv.solon.test.param.RegisterParam;
 
 /**
  * @author lingkang
@@ -19,6 +20,11 @@ public class TestApp {
         return "ok: " + loginParam;
     }
 
+    @Mapping("/register")
+    public Object register(@ValidObject RegisterParam registerParam) {
+        return registerParam;
+    }
+
     @Inject
     private MyBean myBean;
 
@@ -29,6 +35,8 @@ public class TestApp {
         Object object = myBean.myMethod(param);
         return object;
     }
+
+
 
     public static void main(String[] args) {
         Solon.start(TestApp.class, args);

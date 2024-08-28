@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator-parent</artifactId>
-    <version>2.1.0</version>
+    <version>2.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://gitee.com/lingkang_top/final-validator</url>
     <modules>
@@ -41,16 +41,6 @@
         <url>https://gitee.com/lingkang_top/final-validator</url>
         <connection>https://gitee.com/lingkang_top/final-validator.git</connection>
     </scm>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>top.lingkang</groupId>
-                <artifactId>final-validator</artifactId>
-                <version>${parent.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

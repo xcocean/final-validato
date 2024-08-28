@@ -18,8 +18,6 @@ public class LengthHandle implements ValidHandle {
     private String errorStr;
 
     public LengthHandle(Field field, String message, String tag, long min, long max) {
-        if (min == max)
-            throw new CheckException("@Length 所配置的最大最小值不能相等，属性名称：" + field.getName());
         if (min > max)
             throw new CheckException("@Length 所配置的min值不能大于max值，属性名称：" + field.getName());
         if (min < 0)
