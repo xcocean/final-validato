@@ -3,6 +3,7 @@ package top.lingkang.finalvalidated.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.lingkang.finalvalidated.error.CheckException;
+import top.lingkang.finalvalidated.error.ValidatedException;
 import top.lingkang.finalvalidated.handle.CustomValidHandle;
 import top.lingkang.finalvalidated.utils.FinalValidatorUtils;
 
@@ -122,6 +123,8 @@ public class FinalValidator {
      * @throws NullPointerException 未初始化化时，调用将会报空指针，请初始化: <pre>{@code FinalValidator.init()}</pre>
      */
     public static void valid(Object target) {
+        if (target == null)
+            throw new ValidatedException("校验入参不能为空");
         if (finalValidatorFactory.supports(target.getClass())) {
             finalValidatorFactory.validate(target);
         }
