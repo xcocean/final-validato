@@ -24,7 +24,7 @@ public class FinalValidatorFactory {
 
         check = new CheckObject();
         // 判断是否需要校验入参对象
-        if (FinalValidatorUtils.existsConstraints(clazz.getDeclaredFields())) {
+        if (FinalValidatorUtils.existsConstraints(clazz)) {
             // 需要校验并初始化校验
             check.setNeed(true);
             check.setHandles(initValidHandle(clazz));
@@ -42,8 +42,8 @@ public class FinalValidatorFactory {
 
     private List<ValidHandle> initValidHandle(Class<?> clazz) {
         List<ValidHandle> list = new ArrayList<>();
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
+        List<Field> fieldList = FinalValidatorUtils.getAllCheckField(clazz);
+        for (Field field : fieldList) {
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {
                 if (FinalValidatorUtils.annotationConstraints(annotation)) {

@@ -8,31 +8,29 @@ import java.io.Closeable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author lingkang
  * Created by 2024/1/27
  */
 public class FinalValidatorUtils {
-    private static final Set<Class<? extends Annotation>> annotation = new HashSet<>();
+    private static final Set<Class<? extends Annotation>> checkAnnotation = new HashSet<>();
     private static final Map<Class<? extends Annotation>, Class<? extends CustomValidHandle>> customHandle = new HashMap<>();
+    private static final Map<Class<?>, List<Field>> checkFieldCache = new HashMap<>();
 
     static {
-        annotation.add(NotBlank.class);
-        annotation.add(Min.class);
-        annotation.add(Max.class);
-        annotation.add(Length.class);
-        annotation.add(NotEmpty.class);
-        annotation.add(Email.class);
-        annotation.add(Pattern.class);
-        annotation.add(Null.class);
-        annotation.add(NotNull.class);
-        annotation.add(AssertFalse.class);
-        annotation.add(AssertTrue.class);
+        checkAnnotation.add(NotBlank.class);
+        checkAnnotation.add(Min.class);
+        checkAnnotation.add(Max.class);
+        checkAnnotation.add(Length.class);
+        checkAnnotation.add(NotEmpty.class);
+        checkAnnotation.add(Email.class);
+        checkAnnotation.add(Pattern.class);
+        checkAnnotation.add(Null.class);
+        checkAnnotation.add(NotNull.class);
+        checkAnnotation.add(AssertFalse.class);
+        checkAnnotation.add(AssertTrue.class);
     }
 
     /**
@@ -42,18 +40,47 @@ public class FinalValidatorUtils {
      * @param validHandle 自定义注解的校验处理
      */
     public static void addCustom(Class<? extends Annotation> annotation, Class<? extends CustomValidHandle> validHandle) {
-        if (FinalValidatorUtils.annotation.contains(annotation))
+        if (FinalValidatorUtils.checkAnnotation.contains(annotation))
             throw new CheckException("不能重复添加自定义注解：" + annotation.getName());
-        FinalValidatorUtils.annotation.add(annotation);
+        FinalValidatorUtils.checkAnnotation.add(annotation);
         customHandle.put(annotation, validHandle);
     }
 
     /**
      * 判断属性是否存在约束注解
      */
-    public static boolean existsConstraints(Field[] fields) {
-        for (Field field : fields) {
-            if (existsConstraints(field.getAnnotations()))
+    public static boolean existsConstraints(Class<?> clazz) {
+        List<Field> list = getAllCheckField(clazz);
+        return !list.isEmpty();
+    }
+
+
+    public static List<Field> getAllCheckField(Class<?> clazz) {
+        List<Field> list = checkFieldCache.get(clazz);
+        if (list != null)
+            return list;
+        list = new ArrayList<>();
+        HashSet<String> names = new HashSet<>();
+
+        while (clazz != null && clazz != Object.class) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                if (!existsCheckAnnotation(field.getAnnotations()))// 不存在检查注解的跳过
+                    continue;
+                if (names.contains(field.getName()))// 不会检查父级的相同属性
+                    continue;
+                names.add(field.getName());
+                list.add(field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+        checkFieldCache.put(clazz, list);
+        return list;
+    }
+
+    private static boolean existsCheckAnnotation(Annotation[] annotations) {
+        for (Annotation annotation : annotations) {
+            if (FinalValidatorUtils.annotationConstraints(annotation))
                 return true;
         }
         return false;
@@ -64,14 +91,14 @@ public class FinalValidatorUtils {
      */
     public static boolean existsConstraints(Annotation[] annotations) {
         for (Annotation annotation : annotations) {
-            if (FinalValidatorUtils.annotation.contains(annotation.annotationType()))
+            if (FinalValidatorUtils.checkAnnotation.contains(annotation.annotationType()))
                 return true;
         }
         return false;
     }
 
     public static boolean annotationConstraints(Annotation annotation) {
-        return FinalValidatorUtils.annotation.contains(annotation.annotationType());
+        return FinalValidatorUtils.checkAnnotation.contains(annotation.annotationType());
     }
 
 
@@ -129,7 +156,6 @@ public class FinalValidatorUtils {
         } else {
             throw new CheckException(annotation.annotationType() + " 未找到对应的 ValidHandle 处理类实现！");
         }
-
     }
 
     public static boolean notMin(Object o, long value) {
@@ -179,7 +205,7 @@ public class FinalValidatorUtils {
     public static boolean isBlank(CharSequence str) {
         int length;
         if (str != null && (length = str.length()) != 0) {
-            for(int i = 0; i < length; ++i) {
+            for (int i = 0; i < length; ++i) {
                 if (!isBlankChar(str.charAt(i))) {
                     return false;
                 }
@@ -195,10 +221,11 @@ public class FinalValidatorUtils {
         return Character.isWhitespace(c) || Character.isSpaceChar(c) || c == 65279 || c == 8234 || c == 0 || c == 12644 || c == 10240 || c == 6158;
     }
 
-    public static void close(Closeable closeable){
+    public static void close(Closeable closeable) {
         try {
             closeable.close();
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
 }

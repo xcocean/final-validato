@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
  * @create by 2024/3/5 10:09
  */
 class TakeValue {
-    private volatile Field field;
+    private final Field field;
 
     public TakeValue(Field field) {
         this.field = field;

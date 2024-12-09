@@ -33,7 +33,7 @@ import java.util.Properties;
  * </pre>
  * 若你想在静态非spring系统中使用，需要手动初始化:<br/>
  * <pre>{@code
- *   // 只需初始化一次
+ *   // 只需初始化一次，必须初始化，否则报空指针错误
  *   FinalValidator.init();
  *
  *   LoginParam param=new LoginParam();
@@ -118,6 +118,7 @@ public class FinalValidator {
      *         FinalValidator.valid(param);
      * }
      * </pre>
+     * 父级属性也在检查范围（v2.2.0+），如果子类存在与父类相同的属性名，则只检查子类为主。除非子类属性没有添加检查注解。
      *
      * @param target 入参对象，其属性有final-validator校验注解时，会将其校验
      * @throws NullPointerException 未初始化化时，调用将会报空指针，请初始化: <pre>{@code FinalValidator.init()}</pre>
