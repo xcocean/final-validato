@@ -18,6 +18,7 @@ public class FinalValidatorUtils {
     private static final Set<Class<? extends Annotation>> checkAnnotation = new HashSet<>();
     private static final Map<Class<? extends Annotation>, Class<? extends CustomValidHandle>> customHandle = new HashMap<>();
     private static final Map<Class<?>, List<Field>> checkFieldCache = new HashMap<>();
+    private static final Map<Field, List<Annotation>> checkAnnotationCache = new HashMap<>();
 
     static {
         checkAnnotation.add(NotBlank.class);
@@ -54,6 +55,26 @@ public class FinalValidatorUtils {
         return !list.isEmpty();
     }
 
+    public static List<Field> getAllFields(Class<?> clazz) {
+        List<Field> list = checkFieldCache.get(clazz);
+        if (list != null)
+            return list;
+        list = new ArrayList<>();
+        HashSet<String> names = new HashSet<>();
+
+        while (clazz != null && clazz != Object.class) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                if (names.contains(field.getName()))// 不会检查父级的相同属性
+                    continue;
+                names.add(field.getName());
+                list.add(field);
+            }
+            clazz = clazz.getSuperclass();
+        }
+        checkFieldCache.put(clazz, list);
+        return list;
+    }
 
     public static List<Field> getAllCheckField(Class<?> clazz) {
         List<Field> list = checkFieldCache.get(clazz);
@@ -65,7 +86,8 @@ public class FinalValidatorUtils {
         while (clazz != null && clazz != Object.class) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if (!existsCheckAnnotation(field.getAnnotations()))// 不存在检查注解的跳过
+                List<Annotation> validAnn = getValidAnn(field);
+                if (validAnn.isEmpty())// 不存在检查注解的跳过
                     continue;
                 if (names.contains(field.getName()))// 不会检查父级的相同属性
                     continue;
@@ -78,29 +100,23 @@ public class FinalValidatorUtils {
         return list;
     }
 
-    private static boolean existsCheckAnnotation(Annotation[] annotations) {
-        for (Annotation annotation : annotations) {
-            if (FinalValidatorUtils.annotationConstraints(annotation))
-                return true;
-        }
-        return false;
-    }
-
     /**
      * 判断注解是否存在约束注解
      */
-    public static boolean existsConstraints(Annotation[] annotations) {
+    public static List<Annotation> getValidAnn(Field field) {
+        List<Annotation> list = checkAnnotationCache.get(field);
+        if (list == null) {
+            list = new ArrayList<>();
+        } else
+            return list;
+        Annotation[] annotations = field.getAnnotations();
         for (Annotation annotation : annotations) {
-            if (FinalValidatorUtils.checkAnnotation.contains(annotation.annotationType()))
-                return true;
+            if (checkAnnotation.contains(annotation.annotationType()))
+                list.add(annotation);
         }
-        return false;
+        checkAnnotationCache.put(field, list);
+        return list;
     }
-
-    public static boolean annotationConstraints(Annotation annotation) {
-        return FinalValidatorUtils.checkAnnotation.contains(annotation.annotationType());
-    }
-
 
     /// ----------------------------------------------------------------------------------------------
 
@@ -226,6 +242,22 @@ public class FinalValidatorUtils {
             closeable.close();
         } catch (Exception e) {
         }
+    }
+
+    /**
+     * 清理缓存，注意：清理后，您添加的自定义注解也被清除，需要重新添加。
+     * @since 2.3.0
+     */
+    public static void clearCache() {
+        if (!customHandle.isEmpty()){
+            Set<Class<? extends Annotation>> set = customHandle.keySet();
+            for (Class<? extends Annotation> aClass : set) {
+                checkAnnotation.remove(aClass);
+            }
+        }
+        checkFieldCache.clear();
+        checkAnnotationCache.clear();
+        customHandle.clear();
     }
 
 }

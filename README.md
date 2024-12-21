@@ -13,7 +13,7 @@ final-validator 是一个JavaBean元数据校验模型和方法验证，能够�
 <dependency>
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
 </dependency>
 ```
 [版本查看](https://mvnrepository.com/artifact/top.lingkang/final-validator)
@@ -53,14 +53,17 @@ public Object login(@ValidObject LoginParam param) {
 ```java
 @RestControllerAdvice
 public class ExceptionConfig {
+    // 使用spring自带的 json格式化 Jackson库
+    private final ObjectMapper mapper = new ObjectMapper();
     /**
      * 捕获校验异常，返回rest结果
      */
     @ExceptionHandler(ValidatedException.class)
-    public Object v(ValidatedException e) {
+    public Object v(ValidatedException e) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("code", 1);
-        map.put("msg", e.getMessage());
+        map.put("msg", mapper.readValue(e.getMessage(), Map.class));
+        // map.put("msg", mapper.readValue(e.getMessage(), Map.class)); // json格式化校验失败的结果
         // map.put("object", e.getObjectName());
         // map.put("filed", e.getFiledName());
         return map;
@@ -71,25 +74,25 @@ public class ExceptionConfig {
 ### 4、调用
 启动springboot，访问与结果返回：
 
-`/login?username=&password=`
+`/login?username=&password=`<br>
 返回结果
 ```json
-{"msg":"username 不能为空","code":1}
+{"msg":{"username":"不能为空"},"code":1}
 ```
 
-`/login?username=123&password=`
+`/login?username=123&password=`<br>
 返回结果
 ```json
-{"msg":"username 字符长度范围： 6 ~ 20","code":1}
+{"msg":{"username":"字符长度范围： 6 ~ 20"},"code":1}
 ```
 
-`/login?username=123456&password=123`
+`/login?username=123456&password=123`<br>
 返回结果
 ```json
-{"msg":"密码 字符长度范围： 6 ~ 20","code":1}
+{"msg":{"密码":"字符长度范围： 6 ~ 20"},"code":1}
 ```
 
-`/login?username=123456&password=12345678`
+`/login?username=123456&password=12345678`<br>
 返回结果
 ```json
 {"username":"123456","password":"12345678"}

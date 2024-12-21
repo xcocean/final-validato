@@ -20,7 +20,7 @@
 <dependency>
     <groupId>top.lingkang</groupId>
     <artifactId>final-validator-solon</artifactId>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
 </dependency>
 ```
 
@@ -74,7 +74,7 @@ public class TestApp {
 
 访问：http://localhost:8080/login?username=123
 ```html
-password 不能为空
+{"password":"不能为空"}
 ```
 
 ## 非controller中使用
@@ -93,24 +93,10 @@ public class MyBean {
 }
 ```
 
-调用
-```java
-    @Inject
-    private MyBean myBean;
-
-    @Mapping("/")
-    public Object index() {
-        LoginParam param = new LoginParam();
-        param.setUsername("final-validator");
-        Object object = myBean.myMethod(param);
-        return object;
-    }
-```
-
 访问：http://localhost:8080/?username=123
 返回结果：
 ```java
-password 不能为空
+{"password":"不能为空"}
 ```
 
 ## 静态用法

@@ -31,4 +31,13 @@ public class FinalValidatorFactorySpring implements Validator {
         // 校验
         finalValidatorFactory.validate(target);
     }
+
+    /**
+     * 清理缓存，注意：清理后，您添加的自定义注解也被清除，需要重新添加。
+     *
+     * @since 2.3.0
+     */
+    public void clearCache() {
+        finalValidatorFactory.clearCache();
+    }
 }

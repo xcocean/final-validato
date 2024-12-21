@@ -26,6 +26,7 @@ public class FinalValidatorConfig {
     private static final Logger log = LoggerFactory.getLogger(FinalValidatorConfig.class);
     @Autowired
     private ResourceLoader resourceLoader;
+    private FinalValidatorFactory finalValidatorFactory;
 
     /**
      * FinalValidatorFactorySpring 内置 FinalValidatorFactory ，用于折中调用。
@@ -34,7 +35,8 @@ public class FinalValidatorConfig {
     @Bean
     public FinalValidatorFactorySpring finalValidatorFactorySpring(@Autowired RequestMappingHandlerAdapter adapter) throws IOException {
         ConfigurableWebBindingInitializer initializer = (ConfigurableWebBindingInitializer) adapter.getWebBindingInitializer();
-        FinalValidatorFactorySpring validatorFactorySpring = new FinalValidatorFactorySpring(new FinalValidatorFactory());
+        finalValidatorFactory = new FinalValidatorFactory();
+        FinalValidatorFactorySpring validatorFactorySpring = new FinalValidatorFactorySpring(finalValidatorFactory);
         initializer.setValidator(validatorFactorySpring);
 
         // 加载提示
@@ -61,5 +63,14 @@ public class FinalValidatorConfig {
     @Bean
     public FinalValidator finalValidator(@Autowired FinalValidatorFactorySpring spring) {
         return new FinalValidator(spring.finalValidatorFactory);
+    }
+
+    /**
+     * 清理缓存，注意：清理后，您添加的自定义注解也被清除，需要重新添加。
+     *
+     * @since 2.3.0
+     */
+    public void clearCache() {
+        finalValidatorFactory.clearCache();
     }
 }

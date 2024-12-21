@@ -11,10 +11,10 @@ import java.lang.reflect.Field;
  * Created by 2024/1/26
  */
 public class MaxHandle implements ValidHandle {
-    private Field field;
-    private TakeValue takeValue;
-    private long value;
-    private String errorStr;
+    private final Field field;
+    private final TakeValue takeValue;
+    private final long value;
+    private final String errorStr;
     private String notNullStr;
 
     public MaxHandle(Field field, String message, String tag, long value) {
@@ -40,10 +40,10 @@ public class MaxHandle implements ValidHandle {
     public void valid(Object target) {
         Object take = takeValue.take(target);
         if (take == null) {
-            throw new ValidatedException(notNullStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(notNullStr, target.getClass(), field.getName());
         }
         if (FinalValidatorUtils.notMax(take, value)) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(errorStr, target.getClass(), field.getName());
         }
     }
 }

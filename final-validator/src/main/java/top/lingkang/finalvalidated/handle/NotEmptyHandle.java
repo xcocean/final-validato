@@ -11,9 +11,9 @@ import java.lang.reflect.Field;
  * Created by 2024/1/26
  */
 public class NotEmptyHandle implements ValidHandle {
-    private String errorStr;
-    private Field field;
-    private TakeValue takeValue;
+    private final String errorStr;
+    private final Field field;
+    private final TakeValue takeValue;
 
     public NotEmptyHandle(Field field, String message, String tag) {
         if (FinalValidatorUtils.isNotEmpty(tag)) {
@@ -31,7 +31,7 @@ public class NotEmptyHandle implements ValidHandle {
     public void valid(Object target) {
         Object o = takeValue.take(target);
         if (o == null || FinalValidatorUtils.isEmpty(o.toString())) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(errorStr, target.getClass(), field.getName());
         }
     }
 }

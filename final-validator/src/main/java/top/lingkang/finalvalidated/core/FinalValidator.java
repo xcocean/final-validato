@@ -46,18 +46,18 @@ import java.util.Properties;
 public class FinalValidator {
     private static final Logger log = LoggerFactory.getLogger(FinalValidator.class);
 
-    private static FinalValidatorFactory finalValidatorFactory;
+    private static FinalValidatorFactory factory;
     private static boolean isSpring = false;
 
     /**
      * spring初始化时，使用构造函数传递参数
      */
-    public FinalValidator(FinalValidatorFactory finalValidatorFactory) {
-        if (FinalValidator.finalValidatorFactory != null && !isSpring) {
+    public FinalValidator(FinalValidatorFactory factory) {
+        if (FinalValidator.factory != null && !isSpring) {
             throw new CheckException("在spring系统中，不能提前调用 FinalValidator.init() 初始化 FinalValidator ，" +
                     "在spring体系中已经交由bean托管，由spring自动初始化FinalValidator，请不要手动提前于spring初始化FinalValidator");
         }
-        FinalValidator.finalValidatorFactory = finalValidatorFactory;
+        FinalValidator.factory = factory;
         isSpring = true;
     }
 
@@ -66,7 +66,7 @@ public class FinalValidator {
      * spring 体系中不需要调用此方法，spring会自动初始化
      */
     public static void init() {
-        if (finalValidatorFactory != null) {
+        if (factory != null) {
             if (isSpring) {
                 log.warn("FinalValidator 已经交由spring初始化完毕！无须手动初始化");
                 return;
@@ -76,7 +76,7 @@ public class FinalValidator {
         }
 
         try {
-            FinalValidator.finalValidatorFactory = new FinalValidatorFactory();
+            FinalValidator.factory = new FinalValidatorFactory();
 
             // 加载提示
             InputStream inputStream = FinalValidator.class.getClassLoader().getResourceAsStream("defaultValidated.properties");
@@ -95,7 +95,7 @@ public class FinalValidator {
                 FinalValidatorUtils.close(reader);
             }
         } catch (Exception e) {
-            FinalValidator.finalValidatorFactory = null;
+            FinalValidator.factory = null;
             throw new CheckException("final-validator 初始化失败！", e);
         }
         log.info("final-validator Initialization completed");
@@ -126,8 +126,8 @@ public class FinalValidator {
     public static void valid(Object target) {
         if (target == null)
             throw new ValidatedException("校验入参不能为空");
-        if (finalValidatorFactory.supports(target.getClass())) {
-            finalValidatorFactory.validate(target);
+        if (factory.supports(target.getClass())) {
+            factory.validate(target);
         }
     }
 
@@ -139,7 +139,7 @@ public class FinalValidator {
      * @throws NullPointerException 未初始化化时，调用将会报空指针，请初始化: <pre>{@code FinalValidator.init()}</pre>
      */
     public static boolean supports(Class<?> clazz) {
-        return finalValidatorFactory.supports(clazz);
+        return factory.supports(clazz);
     }
 
     /**
@@ -157,14 +157,23 @@ public class FinalValidator {
         // 添加到自定义
         FinalValidatorUtils.addCustom(annotation, validHandle);
         // 添加自定义注解时，将缓存清理
-        finalValidatorFactory.clearCache();
+        factory.clearCache();
     }
 
+    /**
+     * 判断 FinalValidator 是否初始化了
+     *
+     * @return true 已经初始化，false 未初始化，调用将会报空指针，请初始化: <pre>{@code FinalValidator.init()}</pre>
+     */
     public static boolean isInitComplete() {
-        return finalValidatorFactory != null;
+        return factory != null;
     }
 
+    /**
+     * 清理缓存，注意：清理后，您添加的自定义注解也被清除，需要重新添加。
+     * @since 2.3.0
+     */
     public static void clearCache() {
-        finalValidatorFactory.clearCache();
+        factory.clearCache();
     }
 }

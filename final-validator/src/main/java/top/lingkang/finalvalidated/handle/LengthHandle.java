@@ -12,10 +12,11 @@ import java.lang.reflect.Field;
  * Created by 2024/1/26
  */
 public class LengthHandle implements ValidHandle {
-    private Field field;
-    private TakeValue takeValue;
-    private long min, max;
-    private String errorStr;
+    private final Field field;
+    private final TakeValue takeValue;
+    private final long min;
+    private final long max;
+    private final String errorStr;
 
     public LengthHandle(Field field, String message, String tag, long min, long max) {
         if (min > max)
@@ -47,7 +48,7 @@ public class LengthHandle implements ValidHandle {
             return;
         Object o = takeValue.take(target);
         if (o == null || o.toString().length() < min || o.toString().length() > max) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(errorStr, target.getClass(), field.getName());
         }
     }
 }

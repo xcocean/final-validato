@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
  * Created by 2024/1/28
  */
 public class PatternHandle implements ValidHandle {
-    private Field field;
-    private TakeValue takeValue;
-    private String errorStr;
-    private Pattern pattern;
+    private final Field field;
+    private final TakeValue takeValue;
+    private final String errorStr;
+    private final Pattern pattern;
 
     public PatternHandle(Field field, String message, String tag, String value) {
         if (FinalValidatorUtils.isBlank(value)) {
@@ -40,7 +40,7 @@ public class PatternHandle implements ValidHandle {
     public void valid(Object target) {
         Object o = takeValue.take(target);
         if (o == null || !pattern.matcher(o.toString()).matches()) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(errorStr, target.getClass(), field.getName());
         }
     }
 }

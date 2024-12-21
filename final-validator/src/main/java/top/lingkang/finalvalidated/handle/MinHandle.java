@@ -11,10 +11,10 @@ import java.lang.reflect.Field;
  * Created by 2024/1/26
  */
 public class MinHandle implements ValidHandle {
-    private Field field;
-    private long value;
-    private TakeValue takeValue;
-    private String errorStr;
+    private final Field field;
+    private final long value;
+    private final TakeValue takeValue;
+    private final String errorStr;
     private String notNullStr;
 
     public MinHandle(Field field, String message, String tag, long value) {
@@ -40,10 +40,10 @@ public class MinHandle implements ValidHandle {
     public void valid(Object target) {
         Object take = takeValue.take(target);
         if (take == null) {
-            throw new ValidatedException(notNullStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(notNullStr, target.getClass(), field.getName());
         }
         if (FinalValidatorUtils.notMin(take, value)) {
-            throw new ValidatedException(errorStr, target.getClass().getSimpleName(), field.getName());
+            throw new ValidatedException(errorStr, target.getClass(), field.getName());
         }
     }
 }

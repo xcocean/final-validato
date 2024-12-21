@@ -21,5 +21,7 @@ public class Test02Child {
         param.setUsername("lk1234");
         param.setPassword("199512");
         FinalValidator.valid(param);
+        FinalValidator.clearCache();
+        FinalValidator.valid(param);
     }
 }

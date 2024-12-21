@@ -5,22 +5,27 @@ package top.lingkang.finalvalidated.error;
  * Created by 2024/1/26
  * 框架校验异常
  */
-public class ValidatedException extends RuntimeException{
-    private String objectName;
+public class ValidatedException extends RuntimeException {
+    private Class<?> paramClass;
     private String filedName;
+    private String message;
 
-    public ValidatedException(String message, String objectName, String filedName) {
-        super(message);
-        this.objectName = objectName;
+    public ValidatedException(String message, Class<?> paramClass, String filedName) {
+        this.paramClass = paramClass;
         this.filedName = filedName;
+        this.message = message;
     }
 
-    public String getObjectName() {
-        return objectName;
+    public ValidatedException(String message) {
+        this.message = message;
     }
 
-    public void setObjectName(String objectName) {
-        this.objectName = objectName;
+    public Class<?> getParamClass() {
+        return paramClass;
+    }
+
+    public void setParamClass(Class<?> paramClass) {
+        this.paramClass = paramClass;
     }
 
     public String getFiledName() {
@@ -31,11 +36,12 @@ public class ValidatedException extends RuntimeException{
         this.filedName = filedName;
     }
 
-    public ValidatedException(String message) {
-        super(message);
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public ValidatedException(Throwable cause) {
-        super(cause);
+    @Override
+    public String getMessage() {
+        return message;
     }
 }
